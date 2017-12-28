@@ -2,7 +2,9 @@
 
 # dependencies
 /api-server/node_modules/
+/api-server/yarn.lock
 /frontend/node_modules/
+/frontend/yarn.lock
 
 # testing
 /coverage
@@ -22,4 +24,3 @@ yarn-debug.log*
 yarn-error.log*
 
 .eslintrc.json
-yarn.lock
