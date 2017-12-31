@@ -1,0 +1,16 @@
+import { combineReducers } from 'redux';
+
+import { ADD_POSTS } from '../actions';
+
+function posts(state = [], action) {
+  switch (action.type) {
+    case ADD_POSTS:
+      return [...state, ...action.posts];
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({
+  posts,
+});

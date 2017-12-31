@@ -1,15 +1,27 @@
+import { BrowserRouter as Router } from 'react-router-dom';
+import { createStore } from 'redux';
+import { MuiThemeProvider } from 'material-ui/styles';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { render } from 'react-dom';
 
 import './index.css';
-import App from './App';
+import Root from './containers/Root';
+import posts from './reducers/';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+/* eslint-disable no-underscore-dangle */
+const store = createStore(
+  posts,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
+/* eslint-enable */
+
+render(
+  <Router>
+    <MuiThemeProvider>
+      <Root store={store} />
+    </MuiThemeProvider>
+  </Router>,
   document.getElementById('root'),
 );
 
