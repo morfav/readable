@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 
-import addPosts from '../actions/';
+import { addPosts, addCategory } from '../actions/';
 import fetchPosts from '../utils/api';
 
 import Categories from '../components/Categories';
@@ -16,8 +16,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Categories />
-        <PostsContainer />
+        <div>
+          <Categories
+            categories={this.props.categories}
+            onClick={this.props.addCategory}
+          />
+        </div>
+        <div style={{ paddingLeft: '256px' }}>
+          <PostsContainer />
+        </div>
       </div>
     );
   }
@@ -25,13 +32,17 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    posts: state.posts
+    posts: state.posts,
+    categories: [...state.posts.map(post => post.category)
+      .reduce((set, category) => set.add(category), new Set())]
+      .sort(),
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     addPosts: posts => dispatch(addPosts(posts)),
+    addCategory: category => dispatch(addCategory(category)),
   };
 }
 

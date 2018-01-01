@@ -1,14 +1,20 @@
-import React, { Component } from 'react';
+import { Card, CardHeader, CardTitle, CardText } from 'material-ui/Card';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-class Post extends Component {
-  render() {
-    return (
-      <div>
-        {this.props.post.title}
-      </div>
-    )
-  }
-}
+const Post = ({ post }) => (
+  <Card>
+    <CardHeader
+      title={`Category: ${post.category}`}
+    />
+    <CardTitle
+      title={post.title}
+      subtitle={`by ${post.author}`}
+    />
+    <CardText>
+      {post.body}
+    </CardText>
+  </Card>
+);
 
 export default Post;
