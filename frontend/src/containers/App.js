@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 
-import { addPosts, addCategory } from '../actions/';
+import { addPosts, categoryClicked } from '../actions/';
 import fetchPosts from '../utils/api';
 
 import Categories from '../components/Categories';
@@ -19,7 +19,7 @@ class App extends Component {
         <div>
           <Categories
             categories={this.props.categories}
-            onClick={this.props.addCategory}
+            onClick={this.props.categoryClicked}
           />
         </div>
         <div style={{ paddingLeft: '256px' }}>
@@ -42,7 +42,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     addPosts: posts => dispatch(addPosts(posts)),
-    addCategory: category => dispatch(addCategory(category)),
+    categoryClicked: category => dispatch(categoryClicked(category)),
   };
 }
 

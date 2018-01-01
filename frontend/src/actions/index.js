@@ -1,5 +1,5 @@
 export const ADD_POSTS = 'ADD_POSTS';
-export const ADD_CATEGORY = 'ADD_CATEGORY';
+export const CATEGORY_CLICKED = 'CATEGORY_CLICKED';
 
 export function addPosts(posts) {
   return {
@@ -8,9 +8,9 @@ export function addPosts(posts) {
   };
 }
 
-export function addCategory(category) {
+export function categoryClicked(category) {
   return {
-    type: ADD_CATEGORY,
+    type: CATEGORY_CLICKED,
     category,
   };
 }
