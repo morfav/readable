@@ -1,5 +1,10 @@
 .App {
 padding-left: 24px;
 padding-right: 24px;
-top: 40px;
+/* padding-top: 24px; */
+/* top: 40px; */
+}
+
+.Post {
+  padding-top: 24px;
 }
