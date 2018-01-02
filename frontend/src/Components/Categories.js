@@ -6,8 +6,14 @@ import React, { Component } from 'react';
 const Categories = ({ categories, onClick }) => (
   <div>
     <Drawer>
-      {categories.map(category =>
-        <MenuItem key={category} onClick={() => onClick(category)}>{category}</MenuItem>)}
+      {categories.map(category => (
+        <MenuItem
+          key={category.path}
+          onClick={() => onClick(category.name)}
+        >
+          {category.name}
+        </MenuItem>
+      ))}
     </Drawer>
   </div>
 );
