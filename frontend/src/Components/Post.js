@@ -37,29 +37,30 @@ const Post = ({ post }) => (
       <CardText>
         {post.body}
       </CardText>
-      <div style={{ position: 'relative' }}>
-        <CardActions>
-          <RaisedButton icon={<AddIcon />} />
-          <RaisedButton icon={<RemoveIcon />} />
-          <div style={{ verticalAlign: 'middle', display: 'inline-block' }}>
-        <Badge
-          badgeContent={post.voteScore}
-          primary
-          badgeStyle={{ top: 12, right: 12, verticalAlign: 'middle' }}
+      <div style={{ width: '100%', position: 'relative' }}>
+        <div style={{ paddingLeft: 12 }}>
+          <CardActions style={{ display: 'inline-flex', verticalAlign: 'bottom' }}>
+            <RaisedButton icon={<AddIcon />} style={{ float: 'left', minWidth: '56px' }} />
+            <RaisedButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '56px', marginRight: 0 }} />
+          </CardActions>
+          <Badge
+            badgeContent={post.voteScore}
+            primary
+            badgeStyle={{ top: 12, right: 12 }}
+            style={{ paddingLeft: 0, paddingBottom: 0, verticalAlign: 'middle' }}
           >
-          <IconButton tooltip="Votes">
-            <PlusOneIcon />
-          </IconButton>
-        </Badge>
-          </div>
-        </CardActions>
-        <Chip
-          style={{
-            margin: 4, right: 16, bottom: 16, position: 'absolute', verticalAlign: 'middle',
-          }}
-        >
-          #{post.category}
-        </Chip>
+            <IconButton tooltip="Votes">
+              <PlusOneIcon />
+            </IconButton>
+          </Badge>
+          <Chip
+            style={{
+              margin: 4, right: 16, bottom: 16, position: 'absolute', display: 'inline-block',
+            }}
+          >
+            #{post.category}
+          </Chip>
+        </div>
       </div>
     </Card>
   </div>
