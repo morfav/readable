@@ -1,4 +1,4 @@
-import { ADD_CATEGORIES, CATEGORY_CLICKED } from '../actions';
+import { ADD_CATEGORIES, CATEGORY_CLICKED, SELECT_CATEGORY } from '../actions';
 
 const emptyCategories = {
   categories: [],
@@ -7,6 +7,7 @@ const emptyCategories = {
 
 // TODO redo with Object.assign
 // return Object.assign({}, state, action.category);
+// check url categories
 export default function categories(state = emptyCategories, action) {
   switch (action.type) {
     case ADD_CATEGORIES:
@@ -31,6 +32,11 @@ export default function categories(state = emptyCategories, action) {
       return {
         ...state,
         selectedCategories: [...state.selectedCategories, action.category],
+      };
+    case SELECT_CATEGORY:
+      return {
+        ...state,
+        selectedCategories: [action.category],
       };
     default:
       return state;

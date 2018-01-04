@@ -37,11 +37,11 @@ const Post = ({ post }) => (
       <CardText>
         {post.body}
       </CardText>
-      <div style={{ width: '100%', position: 'relative' }}>
+      <div style={{ width: '100%', position: 'relative', paddingBottom: '8px' }}>
         <div style={{ paddingLeft: 12 }}>
           <CardActions style={{ display: 'inline-flex', verticalAlign: 'bottom' }}>
-            <RaisedButton icon={<AddIcon />} style={{ float: 'left', minWidth: '56px' }} />
-            <RaisedButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '56px', marginRight: 0 }} />
+            <RaisedButton icon={<AddIcon />} style={{ float: 'left', minWidth: '48px' }} />
+            <RaisedButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '48px', marginRight: 0 }} />
           </CardActions>
           <Badge
             badgeContent={post.voteScore}
@@ -65,5 +65,5 @@ const Post = ({ post }) => (
     </Card>
   </div>
 );
-// display votescore + up/down
+
 export default Post;
