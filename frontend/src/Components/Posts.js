@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Post from './Post';
+import PostContainer from '../containers/PostContainer';
 
 const Posts = ({ posts }) => (
   <div>
     {posts.map(post => (
-      <Post
+      <PostContainer
         key={post.id}
         post={post}
       />

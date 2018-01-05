@@ -9,8 +9,9 @@ import AddIcon from 'material-ui/svg-icons/content/add';
 import RemoveIcon from 'material-ui/svg-icons/content/remove';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { incrementVote } from '../actions/index';
 
-const Post = ({ post }) => (
+const Post = ({ post, categoryClicked, incrementVotes, decrementVotes }) => (
   <div className="Post">
     <Card>
       <div
@@ -40,8 +41,8 @@ const Post = ({ post }) => (
       <div style={{ width: '100%', position: 'relative', paddingBottom: '8px' }}>
         <div style={{ paddingLeft: 12 }}>
           <CardActions style={{ display: 'inline-flex', verticalAlign: 'bottom' }}>
-            <RaisedButton icon={<AddIcon />} style={{ float: 'left', minWidth: '48px' }} />
-            <RaisedButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '48px', marginRight: 0 }} />
+            <RaisedButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '48px' }} onClick={() => decrementVotes(post)} />
+            <RaisedButton icon={<AddIcon />} style={{ float: 'left', minWidth: '48px', marginRight: 0 }} onClick={() => incrementVotes(post)} />
           </CardActions>
           <Badge
             badgeContent={post.voteScore}
@@ -57,6 +58,7 @@ const Post = ({ post }) => (
             style={{
               margin: 4, right: 16, bottom: 16, position: 'absolute', display: 'inline-block',
             }}
+            onClick={() => categoryClicked(post.category)}
           >
             #{post.category}
           </Chip>
