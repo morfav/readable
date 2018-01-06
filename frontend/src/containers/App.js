@@ -11,7 +11,7 @@ import PostsContainer from './PostsContainer';
 
 class App extends Component {
   componentDidMount() {
-    fetchPosts().then(posts => this.props.addPosts(posts));
+    fetchPosts().then((posts) => this.props.addPosts(posts));
     fetchCategories().then(({ categories }) => this.props.addCategories(categories));
     const urlCategory = this.props.match.params.category;
     if (urlCategory) {

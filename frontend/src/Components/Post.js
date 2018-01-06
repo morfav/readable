@@ -11,7 +11,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { incrementVote } from '../actions/index';
 
-const Post = ({ post, categoryClicked, incrementVotes, decrementVotes }) => (
+const Post = ({ post, categoryClicked, incrementVotes, decrementVotes, sortByTime, sortByScore }) => (
   <div className="Post">
     <Card>
       <div
@@ -49,6 +49,7 @@ const Post = ({ post, categoryClicked, incrementVotes, decrementVotes }) => (
             primary
             badgeStyle={{ top: 12, right: 12 }}
             style={{ paddingLeft: 0, paddingBottom: 0, verticalAlign: 'middle' }}
+            onClick={() => sortByScore()}
           >
             <IconButton tooltip="Votes">
               <PlusOneIcon />

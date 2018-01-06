@@ -4,6 +4,8 @@ export const ADD_POSTS = 'ADD_POSTS';
 export const CATEGORY_CLICKED = 'CATEGORY_CLICKED';
 export const INCREMENT_VOTE = 'INCREMENT_VOTE';
 export const DECREMENT_VOTE = 'DECREMENT_VOTE';
+export const SORT_BY_TIME = 'SORT_BY_TIME';
+export const SORT_BY_SCORE = 'SORT_BY_SCORE';
 export const SELECT_CATEGORY = 'SELECT_CATEGORY';
 
 export function addCategories(categories) {
@@ -52,5 +54,17 @@ export function decrementVote(post) {
   return {
     type: DECREMENT_VOTE,
     post,
+  };
+}
+
+export function sortByTime() {
+  return {
+    type: SORT_BY_TIME,
+  };
+}
+
+export function sortByScore() {
+  return {
+    type: SORT_BY_SCORE,
   };
 }
