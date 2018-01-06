@@ -1,4 +1,4 @@
-import { Card, CardActions, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
 import RaisedButton from 'material-ui/RaisedButton';
 import Badge from 'material-ui/Badge';
@@ -31,6 +31,10 @@ const Post = ({ post, categoryClicked, incrementVotes, decrementVotes, sortByTim
           </IconButton>
         </Badge>
       </div>
+      <CardHeader
+        title={new Date(post.timestamp).toDateString()}
+        onClick={() => sortByTime()}
+      />
       <CardTitle
         title={post.title}
         subtitle={`by ${post.author}`}
