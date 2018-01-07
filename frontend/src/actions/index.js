@@ -7,6 +7,7 @@ export const DECREMENT_VOTE = 'DECREMENT_VOTE';
 export const SORT_BY_TIME = 'SORT_BY_TIME';
 export const SORT_BY_SCORE = 'SORT_BY_SCORE';
 export const SELECT_CATEGORY = 'SELECT_CATEGORY';
+export const SELECT_CATEGORIES = 'SELECT_CATEGORIES';
 
 export function addCategories(categories) {
   return {
@@ -33,6 +34,13 @@ export function selectCategory(category) {
   return {
     type: SELECT_CATEGORY,
     category,
+  };
+}
+
+export function selectCategories(categories) {
+  return {
+    type: SELECT_CATEGORIES,
+    categories,
   };
 }
 

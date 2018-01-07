@@ -1,4 +1,4 @@
-import { ADD_CATEGORIES, CATEGORY_CLICKED, SELECT_CATEGORY } from '../actions';
+import { ADD_CATEGORIES, CATEGORY_CLICKED, SELECT_CATEGORY, SELECT_CATEGORIES } from '../actions';
 
 const emptyCategories = {
   categories: [],
@@ -37,6 +37,11 @@ export default function categories(state = emptyCategories, action) {
       return {
         ...state,
         selectedCategories: [action.category],
+      };
+    case SELECT_CATEGORIES:
+      return {
+        ...state,
+        selectedCategories: [...action.categories],
       };
     default:
       return state;
