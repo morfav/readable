@@ -9,67 +9,74 @@ import AddIcon from 'material-ui/svg-icons/content/add';
 import RemoveIcon from 'material-ui/svg-icons/content/remove';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { incrementVote } from '../actions/index';
+import { Link } from 'react-router-dom';
 
 const Post = ({ post, categoryClicked, incrementVotes, decrementVotes, sortByTime, sortByScore }) => (
   <div className="Post">
-    <Card>
-      <div
-        style={{
-          position: 'absolute',
-          right: 24,
-          zIndex: 1000,
-        }}
-      >
-        <Badge
-          badgeContent={post.commentCount}
-          secondary
-          badgeStyle={{ top: 12, right: 12 }}
+    <Link
+      to="test"
+      style={{
+        textDecoration: 'none',
+      }}
+    >
+      <Card>
+        <div
+          style={{
+            position: 'absolute',
+            right: 24,
+            zIndex: 1000,
+          }}
         >
-          <IconButton tooltip="Comments">
-            <CommentIcon />
-          </IconButton>
-        </Badge>
-      </div>
-      <CardHeader
-        title={new Date(post.timestamp).toDateString()}
-        onClick={() => sortByTime()}
-      />
-      <CardTitle
-        title={post.title}
-        subtitle={`by ${post.author}`}
-      />
-      <CardText>
-        {post.body}
-      </CardText>
-      <div style={{ width: '100%', position: 'relative', paddingBottom: '8px' }}>
-        <div style={{ paddingLeft: 12 }}>
-          <CardActions style={{ display: 'inline-flex', verticalAlign: 'bottom' }}>
-            <RaisedButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '48px' }} onClick={() => decrementVotes(post)} />
-            <RaisedButton icon={<AddIcon />} style={{ float: 'left', minWidth: '48px', marginRight: 0 }} onClick={() => incrementVotes(post)} />
-          </CardActions>
           <Badge
-            badgeContent={post.voteScore}
-            primary
+            badgeContent={post.commentCount}
+            secondary
             badgeStyle={{ top: 12, right: 12 }}
-            style={{ paddingLeft: 0, paddingBottom: 0, verticalAlign: 'middle' }}
-            onClick={() => sortByScore()}
           >
-            <IconButton tooltip="Votes">
-              <PlusOneIcon />
+            <IconButton tooltip="Comments">
+              <CommentIcon />
             </IconButton>
           </Badge>
-          <Chip
-            style={{
-              margin: 4, right: 16, bottom: 16, position: 'absolute', display: 'inline-block',
-            }}
-            onClick={() => categoryClicked(post.category)}
-          >
-            #{post.category}
-          </Chip>
         </div>
-      </div>
-    </Card>
+        <CardHeader
+          title={new Date(post.timestamp).toDateString()}
+          onClick={() => sortByTime()}
+        />
+        <CardTitle
+          title={post.title}
+          subtitle={`by ${post.author}`}
+        />
+        <CardText>
+          {post.body}
+        </CardText>
+        <div style={{ width: '100%', position: 'relative', paddingBottom: '8px' }}>
+          <div style={{ paddingLeft: 12 }}>
+            <CardActions style={{ display: 'inline-flex', verticalAlign: 'bottom' }}>
+              <RaisedButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '48px' }} onClick={() => decrementVotes(post)} />
+              <RaisedButton icon={<AddIcon />} style={{ float: 'left', minWidth: '48px', marginRight: 0 }} onClick={() => incrementVotes(post)} />
+            </CardActions>
+            <Badge
+              badgeContent={post.voteScore}
+              primary
+              badgeStyle={{ top: 12, right: 12 }}
+              style={{ paddingLeft: 0, paddingBottom: 0, verticalAlign: 'middle' }}
+              onClick={() => sortByScore()}
+            >
+              <IconButton tooltip="Votes">
+                <PlusOneIcon />
+              </IconButton>
+            </Badge>
+            <Chip
+              style={{
+                margin: 4, right: 16, bottom: 16, position: 'absolute', display: 'inline-block',
+              }}
+              onClick={() => categoryClicked(post.category)}
+            >
+              #{post.category}
+            </Chip>
+          </div>
+        </div>
+      </Card>
+    </Link>
   </div>
 );
 

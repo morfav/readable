@@ -5,6 +5,7 @@ import './App.css';
 
 import { addCategories, addPosts, categoryClicked, selectCategory, selectCategories } from '../actions/';
 import { fetchPosts, fetchCategories } from '../utils/api';
+import { urlToCategoriesArray, categoriesToUrl } from '../utils/urlTools';
 
 import Categories from '../components/Categories';
 import PostsContainer from './PostsContainer';
@@ -16,29 +17,21 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetchPosts().then((posts) => this.props.addPosts(posts));
+    fetchPosts().then(posts => this.props.addPosts(posts));
     fetchCategories().then(({ categories }) => this.props.addCategories(categories));
-    const urlCategory = this.props.match.params.category ? this.props.match.params.category.split(",") : 0;
-    if (urlCategory) {
-      const categoriesToAdd = [];
-      urlCategory.map(category =>
-        (!this.props.selectedCategories.includes(category) ? categoriesToAdd.push(category) : ''));
-      this.props.selectCategories(categoriesToAdd);
-    }
   }
 
   componentWillReceiveProps(nextProps) {
-    const oldCategories = this.props.match.params.category ? this.props.match.params.category.split(',') : [];
-    const newCategories = nextProps.selectedCategories;
-    let urlNeedsUpdate = false;
-    if (oldCategories.length !== newCategories.length) {
-      urlNeedsUpdate = true;
+    const newCategories = urlToCategoriesArray(nextProps.urlCategories);
+    let categoriesNeedToUpdate = false;
+    if (this.props.selectedCategories.length !== newCategories.length) {
+      categoriesNeedToUpdate = true;
     }
-    if (!urlNeedsUpdate) {
-      oldCategories.forEach(category => (!newCategories.includes(category) ? (urlNeedsUpdate = true) : ''));
+    if (!categoriesNeedToUpdate) {
+      this.props.selectedCategories.forEach(category => (!newCategories.includes(category) ? (categoriesNeedToUpdate = true) : ''));
     }
-    if (urlNeedsUpdate) {
-      this.props.history.push(nextProps.selectedCategories.join(","));
+    if (categoriesNeedToUpdate) {
+      this.props.selectCategories(newCategories);
     }
   }
 
@@ -52,8 +45,8 @@ class App extends Component {
         <div>
           <Categories
             categories={this.props.categories}
-            selectedCategories={this.props.selectedCategories}
-            onClick={categoryName => this.categoryClicked(categoryName)}
+            selectedCategories={(this.props.selectedCategories)}
+            categoryUrl={category => categoriesToUrl(this.props.urlCategories)(category)}
           />
         </div>
         {/* <Route */}
@@ -70,7 +63,7 @@ class App extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
     posts: state.posts,
     // categories: [...state.posts.map(post => post.category)
@@ -78,6 +71,7 @@ function mapStateToProps(state) {
     //   .sort(),
     categories: state.categories.categories.sort(),
     selectedCategories: state.categories.selectedCategories,
+    urlCategories: ownProps.match.params.category ? ownProps.match.params.category : '',
   };
 }
 

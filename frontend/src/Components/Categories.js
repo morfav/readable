@@ -2,19 +2,27 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-const Categories = ({ categories, selectedCategories, onClick }) => (
+const Categories = ({ categories, selectedCategories, categoryUrl }) => (
   <div>
     <Drawer>
       {categories.map(category => (
-        <MenuItem
+        <Link
           key={category.path}
-          checked={selectedCategories.includes(category.name)}
-          onClick={() => onClick(category.name)}
+          to={categoryUrl(category.name)}
+          style={{
+            textDecoration: 'none',
+          }}
         >
-          {category.name}
-        </MenuItem>
-      ))}
+          <MenuItem
+            key={category.path}
+            checked={selectedCategories.includes(category.name)}
+          >
+            {category.name}
+          </MenuItem>
+        </Link>
+        ))}
     </Drawer>
   </div>
 );
