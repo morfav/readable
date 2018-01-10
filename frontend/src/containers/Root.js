@@ -6,7 +6,7 @@ import App from './App';
 
 const Root = ({ store }) => (
   <Provider store={store}>
-    <Route path="/:category?" component={App} />
+    <Route path="/:category?/:post_id?" component={App} />
   </Provider>
 );
 

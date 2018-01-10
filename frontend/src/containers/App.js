@@ -1,4 +1,4 @@
-import { withRouter } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
@@ -8,6 +8,7 @@ import { fetchPosts, fetchCategories } from '../utils/api';
 import { urlToCategoriesArray, categoriesToUrl } from '../utils/urlTools';
 
 import Categories from '../components/Categories';
+import PostDetail from '../components/PostDetail';
 import PostsContainer from './PostsContainer';
 
 class App extends Component {
@@ -40,6 +41,7 @@ class App extends Component {
   }
 
   render() {
+    const selectedPost = this.props.posts.posts.find(post => post.id === this.props.match.params.post_id);
     return (
       <div className="App">
         <div>
@@ -49,15 +51,24 @@ class App extends Component {
             categoryUrl={category => categoriesToUrl(this.props.urlCategories)(category)}
           />
         </div>
-        {/* <Route */}
-          {/* path="/" */}
-          {/* exact */}
-          {/* render={() => ( */}
-        <div style={{ paddingLeft: '256px' }}>
-          <PostsContainer />
-        </div>
-          {/* )} */}
-          {/* /> */}
+        <Route
+          exact
+          path="/:category/:post_id"
+          render={() => (
+            <div style={{ paddingLeft: '256px' }}>
+              <PostDetail post={this.props.posts.posts.find(post => post.id === this.props.match.params.post_id)} />
+            </div>
+          )}
+        />
+        <Route
+          exact
+          path="/:category"
+          render={() => (
+            <div style={{ paddingLeft: '256px' }}>
+              <PostsContainer />
+            </div>
+          )}
+        />
       </div>
     );
   }
