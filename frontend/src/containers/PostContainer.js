@@ -1,11 +1,14 @@
 import { connect } from 'react-redux';
 
 import { incrementVote, decrementVote, categoryClicked, sortByTime, sortByScore } from '../actions/';
-import Post from '../components/Post';
+import Post from '../containers/Post';
 
 const mapStateToProps = (state, { post }) => (
   {
     post,
+    postsComparator: state.posts.postsComparator,
+    timeAscending: state.posts.timeAscending,
+    scoreAscending: state.posts.scoreAscending,
   }
 );
 

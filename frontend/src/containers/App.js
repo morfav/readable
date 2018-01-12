@@ -62,7 +62,7 @@ class App extends Component {
         />
         <Route
           exact
-          path="/:category"
+          path="/:category?"
           render={() => (
             <div style={{ paddingLeft: '256px' }}>
               <PostsContainer />

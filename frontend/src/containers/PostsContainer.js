@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import getComparator, { TIME } from '../utils/postsComparator';
+import { getComparator, TIME } from '../utils/PostsComparatorHelper';
 
 import Posts from '../components/Posts';
 

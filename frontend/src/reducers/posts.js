@@ -1,5 +1,5 @@
 import { ADD_POSTS, INCREMENT_VOTE, DECREMENT_VOTE, SORT_BY_TIME, SORT_BY_SCORE } from '../actions';
-import { TIME, SCORE } from '../utils/postsComparator';
+import { TIME, SCORE } from '../utils/PostsComparatorHelper';
 
 const initialPostsState = {
   posts: [],
