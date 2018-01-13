@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import AddIcon from 'material-ui/svg-icons/content/add';
-import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import RemoveIcon from 'material-ui/svg-icons/content/remove';
 import PlusOneIcon from 'material-ui/svg-icons/social/plus-one';
 
@@ -15,21 +14,21 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import { SCORE } from '../utils/PostsComparatorHelper';
 
-const PostFooter = ({ post, incrementVotes, decrementVotes, categoryClicked, sortByScore, getArrowIcon }) => {
+const PostFooter = ({ post, incrementVoteNoClickPropagation, decrementVoteNoClickPropagation, categoryClicked, sortByScoreNoPropagation, getArrowIcon }) => {
   const icon = getArrowIcon(SCORE);
   return (
     <div style={{ width: '100%', position: 'relative', paddingBottom: '8px' }}>
       <div style={{ paddingLeft: 12 }}>
         <CardActions style={{ display: 'inline-flex', verticalAlign: 'bottom' }}>
-          <RaisedButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '48px' }} onClick={e => decrementVotes(post, e)} />
-          <RaisedButton icon={<AddIcon />} style={{ float: 'left', minWidth: '48px', marginRight: 0 }} onClick={e => incrementVotes(post, e)} />
+          <RaisedButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '48px' }} onClick={e => decrementVoteNoClickPropagation(e)} />
+          <RaisedButton icon={<AddIcon />} style={{ float: 'left', minWidth: '48px', marginRight: 0 }} onClick={e => incrementVoteNoClickPropagation(e)} />
         </CardActions>
         <Badge
           badgeContent={post.voteScore}
           primary
           badgeStyle={{ top: 12, right: 12 }}
           style={{ paddingLeft: 0, paddingBottom: 0, verticalAlign: 'middle' }}
-          onClick={e => sortByScore(e)}
+          onClick={e => sortByScoreNoPropagation(e)}
         >
           <IconButton tooltip="Votes" iconStyle={{ display: 'inline-flex' }}>
             <div>
