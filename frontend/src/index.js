@@ -1,18 +1,22 @@
 import { BrowserRouter as Router } from 'react-router-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import { MuiThemeProvider } from 'material-ui/styles';
 import React from 'react';
 import { render } from 'react-dom';
 
 import './index.css';
 import Root from './containers/Root';
-import posts from './reducers/';
+import rootReducer from './reducers/';
 import registerServiceWorker from './registerServiceWorker';
 
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
-  posts,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  rootReducer,
+  compose(
+    applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  ),
 );
 /* eslint-enable */
 

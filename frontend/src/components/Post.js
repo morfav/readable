@@ -10,26 +10,16 @@ class Post extends Component {
   constructor() {
     super();
 
-    this.sortByTimeNoPropagation = this.sortByTimeNoPropagation.bind(this);
-    this.sortByScoreNoPropagation = this.sortByScoreNoPropagation.bind(this);
-    this.incrementVoteNoClickPropagation = this.incrementVoteNoClickPropagation.bind(this);
-    this.decrementVoteNoClickPropagation = this.decrementVoteNoClickPropagation.bind(this);
+    this.sortPosts = this.sortPosts.bind(this);
+    this.vote = this.vote.bind(this);
   }
 
-  sortByTimeNoPropagation = e => (
-    this.props.sortNoClickPropagation(e, this.props.sortByTime)
+  sortPosts = (type, onClickEvent) => (
+    this.props.sortPosts(type, onClickEvent)
   );
 
-  sortByScoreNoPropagation = e => (
-    this.props.sortNoClickPropagation(e, this.props.sortByScore)
-  )
-
-  incrementVoteNoClickPropagation = e => (
-    this.props.voteNoClickPropagation(this.props.post, e, this.props.incrementVote)
-  );
-
-  decrementVoteNoClickPropagation = e => (
-    this.props.voteNoClickPropagation(this.props.post, e, this.props.decrementVote)
+  vote = (type, e) => (
+    this.props.vote(type, this.props.post, e)
   );
 
   render() {
@@ -41,15 +31,14 @@ class Post extends Component {
         >
           <PostHeader
             post={post}
-            sortByTimeNoPropagation={this.sortByTimeNoPropagation}
+            sortPosts={this.sortPosts}
             getArrowIcon={type => getArrowIcon(type)}
           />
           <PostFooter
             post={post}
-            incrementVoteNoClickPropagation={this.incrementVoteNoClickPropagation}
-            decrementVoteNoClickPropagation={this.decrementVoteNoClickPropagation}
+            vote={this.vote}
             categoryClicked={this.categoryClicked}
-            sortByScoreNoPropagation={this.sortByScoreNoPropagation}
+            sortPosts={this.sortPosts}
             getArrowIcon={type => getArrowIcon(type)}
           />
         </Card>

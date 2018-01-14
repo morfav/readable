@@ -51,28 +51,19 @@ export function addComments(comments) {
   };
 }
 
-export function incrementVote(post) {
+export function vote(type, post, onClickEvent) {
+  if (onClickEvent) {
+    onClickEvent.stopPropagation();
+  }
   return {
-    type: INCREMENT_VOTE,
+    type,
     post,
   };
 }
 
-export function decrementVote(post) {
-  return {
-    type: DECREMENT_VOTE,
-    post,
-  };
-}
-
-export function sortByTime() {
-  return {
-    type: SORT_BY_TIME,
-  };
-}
-
-export function sortByScore() {
-  return {
-    type: SORT_BY_SCORE,
-  };
+export function sortPosts(type, onClickEvent) {
+  if (onClickEvent) {
+    onClickEvent.stopPropagation();
+  }
+  return { type };
 }

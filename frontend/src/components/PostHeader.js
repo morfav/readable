@@ -7,8 +7,9 @@ import IconButton from 'material-ui/IconButton';
 import CommentIcon from 'material-ui/svg-icons/communication/comment';
 
 import { TIME } from '../utils/PostsComparatorHelper';
+import { SORT_BY_TIME } from '../actions/index';
 
-const PostHeader = ({ post, sortByTimeNoPropagation, getArrowIcon }) => {
+const PostHeader = ({ post, sortPosts, getArrowIcon }) => {
   const icon = getArrowIcon(TIME);
   return (
     <div>
@@ -32,7 +33,7 @@ const PostHeader = ({ post, sortByTimeNoPropagation, getArrowIcon }) => {
       <FlatButton
         label={new Date(post.timestamp).toDateString()}
         labelPosition="before"
-        onClick={e => sortByTimeNoPropagation(e)}
+        onClick={e => sortPosts(SORT_BY_TIME, e)}
         style={{ width: 'auto' }}
         icon={icon}
       />

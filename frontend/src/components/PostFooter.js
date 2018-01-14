@@ -13,22 +13,23 @@ import IconButton from 'material-ui/IconButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import { SCORE } from '../utils/PostsComparatorHelper';
+import { DECREMENT_VOTE, INCREMENT_VOTE, SORT_BY_SCORE } from '../actions/index';
 
-const PostFooter = ({ post, incrementVoteNoClickPropagation, decrementVoteNoClickPropagation, categoryClicked, sortByScoreNoPropagation, getArrowIcon }) => {
+const PostFooter = ({ post, vote, categoryClicked, sortPosts, getArrowIcon }) => {
   const icon = getArrowIcon(SCORE);
   return (
     <div style={{ width: '100%', position: 'relative', paddingBottom: '8px' }}>
       <div style={{ paddingLeft: 12 }}>
         <CardActions style={{ display: 'inline-flex', verticalAlign: 'bottom' }}>
-          <RaisedButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '48px' }} onClick={e => decrementVoteNoClickPropagation(e)} />
-          <RaisedButton icon={<AddIcon />} style={{ float: 'left', minWidth: '48px', marginRight: 0 }} onClick={e => incrementVoteNoClickPropagation(e)} />
+          <RaisedButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '48px' }} onClick={e => vote(DECREMENT_VOTE, e)} />
+          <RaisedButton icon={<AddIcon />} style={{ float: 'left', minWidth: '48px', marginRight: 0 }} onClick={e => vote(INCREMENT_VOTE, e)} />
         </CardActions>
         <Badge
           badgeContent={post.voteScore}
           primary
           badgeStyle={{ top: 12, right: 12 }}
           style={{ paddingLeft: 0, paddingBottom: 0, verticalAlign: 'middle' }}
-          onClick={e => sortByScoreNoPropagation(e)}
+          onClick={e => sortPosts(SORT_BY_SCORE, e)}
         >
           <IconButton tooltip="Votes" iconStyle={{ display: 'inline-flex' }}>
             <div>
