@@ -9,7 +9,7 @@
     comments should also have controls for editing or deleting
 
  */
-
+import { connect } from 'react-redux';
 import { Card, CardActions, CardTitle, CardText } from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -23,6 +23,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const PostDetail = ({ post }) => (
+  !post ? (
+    <div>
+      Loading
+    </div>
+  ) :
   <div className="Post">
     <Card>
       <div
@@ -78,4 +83,8 @@ const PostDetail = ({ post }) => (
   </div>
 );
 
-export default PostDetail;
+const mapStateToProps = state => ({
+  post: state.posts.posts.find(post => post.id === state.posts.showingPost),
+});
+
+export default connect(mapStateToProps)(PostDetail);

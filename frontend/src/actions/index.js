@@ -8,6 +8,7 @@ export const SORT_BY_TIME = 'SORT_BY_TIME';
 export const SORT_BY_SCORE = 'SORT_BY_SCORE';
 export const SELECT_CATEGORY = 'SELECT_CATEGORY';
 export const SELECT_CATEGORIES = 'SELECT_CATEGORIES';
+export const SET_SHOWING_POST = 'SET_SHOWING_POST';
 
 export function addCategories(categories) {
   return {
@@ -66,4 +67,11 @@ export function sortPosts(type, onClickEvent) {
     onClickEvent.stopPropagation();
   }
   return { type };
+}
+
+export function setShowingPost(postId) {
+  return {
+    type: SET_SHOWING_POST,
+    postId,
+  }
 }
