@@ -10,7 +10,7 @@ const Categories = ({ categories, selectedCategories, categoryUrl }) => (
       {categories.map(category => (
         <Link
           key={category.path}
-          to={categoryUrl(category.name)}
+          to={`/${categoryUrl(category.name)}`}
           style={{
             textDecoration: 'none',
           }}

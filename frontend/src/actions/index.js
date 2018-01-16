@@ -10,6 +10,12 @@ export const SELECT_CATEGORY = 'SELECT_CATEGORY';
 export const SELECT_CATEGORIES = 'SELECT_CATEGORIES';
 export const SET_SHOWING_POST = 'SET_SHOWING_POST';
 
+export const suppressOnClick = (onClickEvent) => {
+  if (onClickEvent) {
+    onClickEvent.stopPropagation();
+  }
+};
+
 export function addCategories(categories) {
   return {
     type: ADD_CATEGORIES,
@@ -53,9 +59,7 @@ export function addComments(comments) {
 }
 
 export function vote(type, post, onClickEvent) {
-  if (onClickEvent) {
-    onClickEvent.stopPropagation();
-  }
+  suppressOnClick(onClickEvent);
   return {
     type,
     post,
@@ -63,9 +67,7 @@ export function vote(type, post, onClickEvent) {
 }
 
 export function sortPosts(type, onClickEvent) {
-  if (onClickEvent) {
-    onClickEvent.stopPropagation();
-  }
+  suppressOnClick(onClickEvent);
   return { type };
 }
 
@@ -73,5 +75,5 @@ export function setShowingPost(postId) {
   return {
     type: SET_SHOWING_POST,
     postId,
-  }
+  };
 }

@@ -5,8 +5,7 @@ export const urlToCategoriesArray = (urlString) => {
   return urlString.split(',');
 };
 
-export const categoriesToUrl = urlString => (category) => {
-  const currentCategories = urlToCategoriesArray(urlString);
+export const arrayCategoriesToUrl = (currentCategories, category) => {
   if (currentCategories.includes(category)) {
     const newCategories = currentCategories.filter(currentCategory => currentCategory !== category);
     if (newCategories.length > 1) {
@@ -21,4 +20,9 @@ export const categoriesToUrl = urlString => (category) => {
   }
   currentCategories.push(category);
   return currentCategories.join(',');
+};
+
+export const categoriesToUrl = urlString => (category) => {
+  const currentCategories = urlToCategoriesArray(urlString);
+  return arrayCategoriesToUrl(currentCategories, category);
 };

@@ -3,6 +3,7 @@ import { ADD_CATEGORIES, CATEGORY_CLICKED, SELECT_CATEGORY, SELECT_CATEGORIES } 
 const emptyCategories = {
   categories: [],
   selectedCategories: [],
+  urlCategories: '', // TODO
 };
 
 // TODO redo with Object.assign

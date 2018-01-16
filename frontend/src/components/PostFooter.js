@@ -13,9 +13,9 @@ import IconButton from 'material-ui/IconButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import { SCORE } from '../utils/PostsComparatorHelper';
-import { DECREMENT_VOTE, INCREMENT_VOTE, SORT_BY_SCORE } from '../actions/index';
+import { DECREMENT_VOTE, INCREMENT_VOTE, SORT_BY_SCORE, suppressOnClick } from '../actions/';
 
-const PostFooter = ({ post, vote, categoryClicked, sortPosts, getArrowIcon }) => {
+const PostFooter = ({ post, vote, sortPosts, getArrowIcon, categoryUrl }) => {
   const icon = getArrowIcon(SCORE);
   return (
     <div style={{ width: '100%', position: 'relative', paddingBottom: '8px' }}>
@@ -39,13 +39,15 @@ const PostFooter = ({ post, vote, categoryClicked, sortPosts, getArrowIcon }) =>
           </IconButton>
         </Badge>
         <Link
-          to='test'
+          to={categoryUrl}
+          onClick={e => suppressOnClick(e)}
         >
           <Chip
             style={{
-              margin: 4, right: 16, bottom: 16, position: 'absolute', display: 'inline-block',
+              margin: 4, right: 16, bottom: 16, position: 'absolute', display: 'inline-block', cursor: 'pointer',
             }}
-            onClick={e => categoryClicked(post.category, e)}
+            // Need for mouse pointer
+            // onClick={e => suppressOnClick(e)}
           >
             #{post.category}
           </Chip>

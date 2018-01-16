@@ -23,7 +23,7 @@ class Post extends Component {
   );
 
   render() {
-    const { post, history, getArrowIcon } = this.props;
+    const { post, history, getArrowIcon, categoryUrl } = this.props;
     return (
       <div className="Post">
         <Card
@@ -40,6 +40,7 @@ class Post extends Component {
             categoryClicked={this.categoryClicked}
             sortPosts={this.sortPosts}
             getArrowIcon={type => getArrowIcon(type)}
+            categoryUrl={categoryUrl}
           />
         </Card>
       </div>
