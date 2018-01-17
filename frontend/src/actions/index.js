@@ -1,14 +1,10 @@
 export const ADD_CATEGORIES = 'ADD_CATEGORIES';
 export const ADD_COMMENTS = 'ADD_COMMENTS';
 export const ADD_POSTS = 'ADD_POSTS';
-export const CATEGORY_CLICKED = 'CATEGORY_CLICKED';
 export const INCREMENT_VOTE = 'INCREMENT_VOTE';
 export const DECREMENT_VOTE = 'DECREMENT_VOTE';
 export const SORT_BY_TIME = 'SORT_BY_TIME';
 export const SORT_BY_SCORE = 'SORT_BY_SCORE';
-export const SELECT_CATEGORY = 'SELECT_CATEGORY';
-export const SELECT_CATEGORIES = 'SELECT_CATEGORIES';
-export const SET_SHOWING_POST = 'SET_SHOWING_POST';
 
 export const suppressOnClick = (onClickEvent) => {
   if (onClickEvent) {
@@ -30,27 +26,6 @@ export function addPosts(posts) {
   };
 }
 
-export function categoryClicked(category) {
-  return {
-    type: CATEGORY_CLICKED,
-    category,
-  };
-}
-
-export function selectCategory(category) {
-  return {
-    type: SELECT_CATEGORY,
-    category,
-  };
-}
-
-export function selectCategories(categories) {
-  return {
-    type: SELECT_CATEGORIES,
-    categories,
-  };
-}
-
 export function addComments(comments) {
   return {
     type: ADD_COMMENTS,
@@ -69,11 +44,4 @@ export function vote(type, post, onClickEvent) {
 export function sortPosts(type, onClickEvent) {
   suppressOnClick(onClickEvent);
   return { type };
-}
-
-export function setShowingPost(postId) {
-  return {
-    type: SET_SHOWING_POST,
-    postId,
-  };
 }

@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 import { getComparator, TIME } from '../utils/PostsComparatorHelper';
-import { urlToCategoriesArray } from '../utils/urlTools';
+import { urlToCategoriesArray, getUrlCategories } from '../utils/urlTools';
 
 
 import Posts from '../components/Posts';
 
 function mapStateToProps(state, ownProps) {
-  const selectedCategories = urlToCategoriesArray(ownProps.urlCategories);
+  const selectedCategories = urlToCategoriesArray(getUrlCategories(ownProps.match));
   const posts = selectedCategories.length ?
     state.posts.posts.filter(post => selectedCategories.includes(post.category))
     : state.posts.posts;
@@ -16,4 +18,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(Posts);
+export default withRouter(connect(mapStateToProps)(Posts));

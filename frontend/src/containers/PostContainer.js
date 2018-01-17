@@ -1,14 +1,15 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { TIME, getIcon } from '../utils/PostsComparatorHelper';
 import { vote, sortPosts } from '../actions/';
 import Post from '../components/Post';
-import { categoriesToUrl } from '../utils/urlTools';
+import { categoriesToUrl, getUrlCategories } from '../utils/urlTools';
 
 
-const mapStateToProps = (state, { post, urlCategories }) => {
+const mapStateToProps = (state, { post, match }) => {
   const { postsComparator, timeAscending, scoreAscending } = state.posts;
-  const categoryUrl = categoriesToUrl(urlCategories)(post.category);
+  const categoryUrl = categoriesToUrl(getUrlCategories(match))(post.category);
   return ({
     post,
     getArrowIcon: type => getIcon(
@@ -25,4 +26,4 @@ const mapDispatchToProps = dispatch => ({
   sortPosts: (type, e) => dispatch(sortPosts(type, e)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Post);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Post));

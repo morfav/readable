@@ -26,3 +26,7 @@ export const categoriesToUrl = urlString => (category) => {
   const currentCategories = urlToCategoriesArray(urlString);
   return arrayCategoriesToUrl(currentCategories, category);
 };
+
+export const getUrlCategories = (match) => {
+  return match.params.category ? match.params.category : '';
+};

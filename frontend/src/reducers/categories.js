@@ -2,8 +2,8 @@ import { ADD_CATEGORIES, CATEGORY_CLICKED, SELECT_CATEGORY, SELECT_CATEGORIES } 
 
 const emptyCategories = {
   categories: [],
-  selectedCategories: [],
-  urlCategories: '', // TODO
+  // selectedCategories: [],
+  // urlCategories: '', // TODO
 };
 
 // TODO redo with Object.assign
@@ -19,31 +19,31 @@ export default function categories(state = emptyCategories, action) {
           ...action.categories,
         ],
       };
-    case CATEGORY_CLICKED:
-      // category was already selected, need to remove it
-      if (state.selectedCategories.includes(action.category)) {
-        return {
-          ...state,
-          selectedCategories: [
-            ...state.selectedCategories.filter(category => category !== action.category),
-          ],
-        };
-      }
-      // category was not selected previously
-      return {
-        ...state,
-        selectedCategories: [...state.selectedCategories, action.category],
-      };
-    case SELECT_CATEGORY:
-      return {
-        ...state,
-        selectedCategories: [action.category],
-      };
-    case SELECT_CATEGORIES:
-      return {
-        ...state,
-        selectedCategories: [...action.categories],
-      };
+    // case CATEGORY_CLICKED:
+    //   // category was already selected, need to remove it
+    //   if (state.selectedCategories.includes(action.category)) {
+    //     return {
+    //       ...state,
+    //       selectedCategories: [
+    //         ...state.selectedCategories.filter(category => category !== action.category),
+    //       ],
+    //     };
+    //   }
+    //   // category was not selected previously
+    //   return {
+    //     ...state,
+    //     selectedCategories: [...state.selectedCategories, action.category],
+    //   };
+    // case SELECT_CATEGORY:
+    //   return {
+    //     ...state,
+    //     selectedCategories: [action.category],
+    //   };
+    // case SELECT_CATEGORIES:
+    //   return {
+    //     ...state,
+    //     selectedCategories: [...action.categories],
+    //   };
     default:
       return state;
   }

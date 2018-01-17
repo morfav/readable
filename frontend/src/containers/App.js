@@ -3,27 +3,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 
-import { addCategories, addPosts, categoryClicked, selectCategory, selectCategories, setShowingPost } from '../actions/';
+import { addCategories, addPosts } from '../actions/';
 import { fetchPosts, fetchCategories } from '../utils/api';
-import { urlToCategoriesArray, categoriesToUrl } from '../utils/urlTools';
+import { urlToCategoriesArray, categoriesToUrl, getUrlCategories } from '../utils/urlTools';
 
 import Categories from '../components/Categories';
 import PostDetail from '../components/PostDetail';
 import PostsContainer from './PostsContainer';
 
 class App extends Component {
-  constructor() {
-    super();
-    this.categoryClicked = this.categoryClicked.bind(this);
-  }
-
   componentDidMount() {
     fetchPosts().then(posts => this.props.addPosts(posts));
     fetchCategories().then(({ categories }) => this.props.addCategories(categories));
-  }
-
-  categoryClicked(categoryName) {
-    this.props.categoryClicked(categoryName);
   }
 
   render() {
@@ -50,7 +41,7 @@ class App extends Component {
           path="/:category?"
           render={() => (
             <div style={{ paddingLeft: '256px' }}>
-              <PostsContainer urlCategories={this.props.urlCategories} />
+              <PostsContainer />
             </div>
           )}
         />
@@ -63,7 +54,7 @@ function mapStateToProps(state, ownProps) {
   return {
     posts: state.posts,
     categories: state.categories.categories.sort(),
-    urlCategories: ownProps.match.params.category ? ownProps.match.params.category : '',
+    urlCategories: getUrlCategories(ownProps.match),
     urlPost: ownProps.match.params.post_id ? ownProps.match.params.post_id : null,
   };
 }
@@ -72,10 +63,6 @@ function mapDispatchToProps(dispatch) {
   return {
     addCategories: categories => dispatch(addCategories(categories)),
     addPosts: posts => dispatch(addPosts(posts)),
-    categoryClicked: category => dispatch(categoryClicked(category)),
-    selectCategory: category => dispatch(selectCategory(category)),
-    selectCategories: categories => dispatch(selectCategories(categories)),
-    setShowingPost: postId => dispatch(setShowingPost(postId)),
   };
 }
 
