@@ -22,23 +22,6 @@ class App extends Component {
     fetchCategories().then(({ categories }) => this.props.addCategories(categories));
   }
 
-  componentWillReceiveProps(nextProps) {
-    const newCategories = urlToCategoriesArray(nextProps.urlCategories);
-    let categoriesNeedToUpdate = false;
-    if (nextProps.selectedCategories.length !== newCategories.length) {
-      categoriesNeedToUpdate = true;
-    }
-    if (!categoriesNeedToUpdate) {
-      nextProps.selectedCategories.forEach(category => (!newCategories.includes(category) && (categoriesNeedToUpdate = true)));
-    }
-    if (categoriesNeedToUpdate) {
-      this.props.selectCategories(newCategories);
-    }
-    if (nextProps.posts.showingPost !== nextProps.urlPost) {
-      this.props.setShowingPost(nextProps.urlPost);
-    }
-  }
-
   categoryClicked(categoryName) {
     this.props.categoryClicked(categoryName);
   }
@@ -49,7 +32,7 @@ class App extends Component {
         <div>
           <Categories
             categories={this.props.categories}
-            selectedCategories={(this.props.selectedCategories)}
+            selectedCategories={urlToCategoriesArray(this.props.urlCategories)}
             categoryUrl={category => categoriesToUrl(this.props.urlCategories)(category)}
           />
         </div>
@@ -58,7 +41,7 @@ class App extends Component {
           path="/:category/:post_id"
           render={() => (
             <div style={{ paddingLeft: '256px' }}>
-              <PostDetail />
+              <PostDetail postId={this.props.urlPost} />
             </div>
           )}
         />
@@ -67,7 +50,7 @@ class App extends Component {
           path="/:category?"
           render={() => (
             <div style={{ paddingLeft: '256px' }}>
-              <PostsContainer />
+              <PostsContainer urlCategories={this.props.urlCategories} />
             </div>
           )}
         />
@@ -80,7 +63,6 @@ function mapStateToProps(state, ownProps) {
   return {
     posts: state.posts,
     categories: state.categories.categories.sort(),
-    selectedCategories: state.categories.selectedCategories,
     urlCategories: ownProps.match.params.category ? ownProps.match.params.category : '',
     urlPost: ownProps.match.params.post_id ? ownProps.match.params.post_id : null,
   };

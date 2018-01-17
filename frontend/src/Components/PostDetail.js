@@ -83,8 +83,8 @@ const PostDetail = ({ post }) => (
   </div>
 );
 
-const mapStateToProps = state => ({
-  post: state.posts.posts.find(post => post.id === state.posts.showingPost),
+const mapStateToProps = (state, ownProps) => ({
+  post: state.posts.posts.find(post => post.id === ownProps.postId),
 });
 
 export default connect(mapStateToProps)(PostDetail);

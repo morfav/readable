@@ -46,8 +46,6 @@ const PostFooter = ({ post, vote, sortPosts, getArrowIcon, categoryUrl }) => {
             style={{
               margin: 4, right: 16, bottom: 16, position: 'absolute', display: 'inline-block', cursor: 'pointer',
             }}
-            // Need for mouse pointer
-            // onClick={e => suppressOnClick(e)}
           >
             #{post.category}
           </Chip>

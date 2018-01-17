@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { TIME, getIcon } from '../utils/PostsComparatorHelper';
 import { vote, sortPosts } from '../actions/';
 import Post from '../components/Post';
-import { arrayCategoriesToUrl } from '../utils/urlTools';
+import { categoriesToUrl } from '../utils/urlTools';
 
 
-const mapStateToProps = (state, { post }) => {
+const mapStateToProps = (state, { post, urlCategories }) => {
   const { postsComparator, timeAscending, scoreAscending } = state.posts;
-  const categoryUrl = arrayCategoriesToUrl(state.categories.selectedCategories, post.category);
+  const categoryUrl = categoriesToUrl(urlCategories)(post.category);
   return ({
     post,
     getArrowIcon: type => getIcon(
