@@ -8,7 +8,7 @@ import { fetchPosts, fetchCategories } from '../utils/api';
 import { urlToCategoriesArray, categoriesToUrl, getUrlCategories } from '../utils/urlTools';
 
 import Categories from '../components/Categories';
-import PostDetail from '../components/PostDetail';
+import PostContainer from '../containers/PostContainer';
 import PostsContainer from './PostsContainer';
 
 class App extends Component {
@@ -32,7 +32,7 @@ class App extends Component {
           path="/:category/:post_id"
           render={() => (
             <div style={{ paddingLeft: '256px' }}>
-              <PostDetail postId={this.props.urlPost} />
+              <PostContainer post={this.props.posts.find(post => post.id === this.props.urlPost)} />
             </div>
           )}
         />
@@ -52,7 +52,7 @@ class App extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    posts: state.posts,
+    posts: state.posts.posts,
     categories: state.categories.categories.sort(),
     urlCategories: getUrlCategories(ownProps.match),
     urlPost: ownProps.match.params.post_id ? ownProps.match.params.post_id : null,

@@ -14,9 +14,9 @@ export const getComparator = (type, isAscending, objectsToSort) => {
   return ((postOne, postTwo) => (postTwo[type] - postOne[type] === 0 ? objectsToSort.indexOf(postOne) - objectsToSort.indexOf(postTwo) : postTwo[type] - postOne[type]));
 };
 
-export const getIcon = (type, isAscending, postsComparator) => {
+export const getIcon = (type, isAscending, postsComparator, postId) => {
   let icon = null;
-  if (postsComparator === type) {
+  if (postsComparator === type && !postId) {
     isAscending ? icon = <ArrowDropUp /> : icon = <ArrowDropDown />
   }
   return icon;

@@ -30,3 +30,7 @@ export const categoriesToUrl = urlString => (category) => {
 export const getUrlCategories = (match) => {
   return match.params.category ? match.params.category : '';
 };
+
+export const getPostId = (match) => {
+  return match.params.post_id ? match.params.post_id : 0;
+};
