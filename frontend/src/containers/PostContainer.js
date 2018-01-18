@@ -16,7 +16,7 @@ const onCardClick = (e, history, postIdUrl, category, id) => {
 };
 
 const getTimeLabel = (post, postIdUrl) => (
-  postIdUrl ? new Date(post.timestamp).toDateString() : new Date(post.timestamp).toDateString()
+  postIdUrl ? new Date(post.timestamp).toUTCString() : new Date(post.timestamp).toDateString()
 );
 
 const mapStateToProps = (state, { post, match, history }) => {

@@ -1,6 +1,5 @@
 /**
  * Post Detail View
-    should show the details of a post, including: Title, Body, Author, timestamp (in user readable format), and vote score
     should list all of the comments for that post
     should have controls to edit or delete the post
     should have a control to add a new comment.
@@ -11,7 +10,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { Card } from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 
 import PostHeader from '../components/PostHeader';
 import PostFooter from '../components/PostFooter';
@@ -35,7 +34,7 @@ class Post extends Component {
   };
 
   render() {
-    const { post, history, getArrowIcon, categoryUrl, postTime, loading, onCardClick } = this.props;
+    const { post, history, getArrowIcon, categoryUrl, postTime, loading, onCardClick, postIdUrl } = this.props;
     if (loading) {
       return (
         <div>Loading...</div>
@@ -52,6 +51,12 @@ class Post extends Component {
             getArrowIcon={type => getArrowIcon(type)}
             postTime={postTime}
           />
+          {postIdUrl ? (
+            <CardText>
+              {post.body}
+            </CardText>
+          ) : null
+          }
           <PostFooter
             post={post}
             vote={this.vote}
