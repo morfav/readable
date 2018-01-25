@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 
-import { addCategories, addPosts } from '../actions/';
-import { fetchPosts, fetchCategories } from '../utils/api';
+import { addCategories, getPosts, getCategories } from '../actions/';
 import { urlToCategoriesArray, categoriesToUrl, getUrlCategories } from '../utils/urlTools';
 
 import Categories from '../components/Categories';
@@ -13,8 +12,9 @@ import PostsContainer from './PostsContainer';
 
 class App extends Component {
   componentDidMount() {
-    fetchPosts().then(posts => this.props.addPosts(posts));
-    fetchCategories().then(({ categories }) => this.props.addCategories(categories));
+    const { dispatch } = this.props;
+    dispatch(getPosts(null));
+    dispatch(getCategories());
   }
 
   render() {
@@ -61,8 +61,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addCategories: categories => dispatch(addCategories(categories)),
-    addPosts: posts => dispatch(addPosts(posts)),
+    dispatch,
   };
 }
 

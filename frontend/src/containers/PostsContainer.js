@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { getComparator, TIME } from '../utils/PostsComparatorHelper';
 import { urlToCategoriesArray, getUrlCategories } from '../utils/urlTools';
 
-
 import Posts from '../components/Posts';
 
 function mapStateToProps(state, ownProps) {

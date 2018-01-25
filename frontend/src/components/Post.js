@@ -14,7 +14,7 @@ import { Card, CardText } from 'material-ui/Card';
 
 import PostHeader from '../components/PostHeader';
 import PostFooter from '../components/PostFooter';
-import { suppressOnClick } from '../actions/index';
+import { suppressOnClick, getPosts, getComments } from '../actions/';
 
 class Post extends Component {
   constructor(props) {
@@ -22,6 +22,14 @@ class Post extends Component {
 
     this.sortPosts = this.sortPosts.bind(this);
     this.vote = this.vote.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.postIdUrl) {
+      const { postIdUrl, dispatch } = this.props;
+      dispatch(getPosts(postIdUrl));
+      dispatch(getComments(postIdUrl));
+    }
   }
 
   vote = (type, e) => {
@@ -55,7 +63,7 @@ class Post extends Component {
             <CardText>
               {post.body}
             </CardText>
-          ) : null
+            ) : null
           }
           <PostFooter
             post={post}

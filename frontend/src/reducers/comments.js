@@ -1,9 +1,17 @@
 import { ADD_COMMENTS } from '../actions';
 
-export default function comments(state = [], action) {
+const emptyComments = {
+  comments: [],
+};
+
+export default function comments(state = emptyComments, action) {
   switch (action.type) {
     case ADD_COMMENTS:
-      return [...state, ...action.comments];
+      const newCommentIds = action.comments.map(comment => comment.id);
+      return {
+        ...state,
+        comments: [...state.comments.filter(comment => !newCommentIds.includes(comment.id)), ...action.comments],
+      };
     default:
       return state;
   }

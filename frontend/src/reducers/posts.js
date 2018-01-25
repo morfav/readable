@@ -11,9 +11,10 @@ const initialPostsState = {
 export default function posts(state = initialPostsState, action) {
   switch (action.type) {
     case ADD_POSTS:
+    const newPostIds = action.posts.map(post => post.id);
       return {
         ...state,
-        posts: [...state.posts, ...action.posts],
+        posts: [...state.posts.filter(post => !newPostIds.includes(post.id)), ...action.posts],
       };
     case INCREMENT_VOTE:
       return {

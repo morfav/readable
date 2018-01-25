@@ -10,7 +10,14 @@ export function fetchCategories() {
 }
 
 export function fetchPosts(postId = null) {
-  return fetch(`${server}/posts`,
+  return fetch(`${server}/posts${postId ? `/${postId}` : ''}`,
+    authHeader,
+  )
+    .then(res => res.json());
+}
+
+export function fetchCommentsForPost(postId) {
+  return fetch(`${server}/posts/${postId}/comments`,
     authHeader,
   )
     .then(res => res.json());

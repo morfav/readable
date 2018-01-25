@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { TIME, getIcon } from '../utils/PostsComparatorHelper';
-import { vote, sortPosts, suppressOnClick } from '../actions/';
+import { vote, sortPosts, addPosts, addComments, suppressOnClick } from '../actions/';
 import Post from '../components/Post';
 import { categoriesToUrl, getUrlCategories, getPostId } from '../utils/urlTools';
 
@@ -11,7 +11,7 @@ const onCardClick = (e, history, postIdUrl, category, id) => {
   if (!postIdUrl) {
     history.push(`/${category}/${id}`);
   } else {
-    history.push(`/${category}`);
+    history.goBack();
   }
 };
 
@@ -20,9 +20,9 @@ const getTimeLabel = (post, postIdUrl) => (
 );
 
 const mapStateToProps = (state, { post, match, history }) => {
+  const postIdUrl = getPostId(match);
   if (post) {
     const { postsComparator, timeAscending, scoreAscending } = state.posts;
-    const postIdUrl = getPostId(match);
     const categoryUrl = categoriesToUrl(getUrlCategories(match))(post.category);
     const postTime = getTimeLabel(post, postIdUrl);
     return ({
@@ -40,6 +40,7 @@ const mapStateToProps = (state, { post, match, history }) => {
     });
   }
   return ({
+    postIdUrl,
     loading: true,
   });
 };
@@ -47,6 +48,7 @@ const mapStateToProps = (state, { post, match, history }) => {
 const mapDispatchToProps = dispatch => ({
   vote: (type, post, e) => dispatch(vote(type, post, e)),
   sortPosts: (type, e) => dispatch(sortPosts(type, e)),
+  dispatch,
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Post));

@@ -1,3 +1,5 @@
+import { fetchPosts, fetchCategories, fetchCommentsForPost } from '../utils/api';
+
 export const ADD_CATEGORIES = 'ADD_CATEGORIES';
 export const ADD_COMMENTS = 'ADD_COMMENTS';
 export const ADD_POSTS = 'ADD_POSTS';
@@ -19,6 +21,11 @@ export function addCategories(categories) {
   };
 }
 
+export const getCategories = () => dispatch => (
+  fetchCategories().then(({ categories }) => dispatch(addCategories(categories)))
+);
+
+
 export function addPosts(posts) {
   return {
     type: ADD_POSTS,
@@ -26,12 +33,20 @@ export function addPosts(posts) {
   };
 }
 
+export const getPosts = postIdUrl => dispatch => (
+  fetchPosts(postIdUrl).then(posts => dispatch(addPosts(postIdUrl ? [posts] : posts)))
+);
+
 export function addComments(comments) {
   return {
     type: ADD_COMMENTS,
     comments,
   };
 }
+
+export const getComments = postIdUrl => dispatch => (
+  fetchCommentsForPost(postIdUrl).then(comments => dispatch(addComments(comments)))
+);
 
 export function vote(type, post, onClickEvent) {
   suppressOnClick(onClickEvent);
