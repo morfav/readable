@@ -16,12 +16,13 @@
  */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Card, CardText } from 'material-ui/Card';
 
 import CommentHeader from '../components/CommentHeader';
 import CommentFooter from '../components/CommentFooter';
-import { suppressOnClick } from '../actions/';
+import { vote, suppressOnClick } from '../actions/';
 
 class Comment extends Component {
   constructor(props) {
@@ -61,4 +62,8 @@ class Comment extends Component {
   }
 }
 
-export default Comment;
+const mapDispatchToProps = dispatch => ({
+  vote: (type, comment, e) => dispatch(vote(type, comment, e)),
+});
+
+export default connect(null, mapDispatchToProps)(Comment);

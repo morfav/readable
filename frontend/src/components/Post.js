@@ -84,7 +84,7 @@ class Post extends Component {
           />
           {postIdUrl ? (
             comments.map(comment =>
-              <Comment comment={comment} />)
+              <Comment key={comment.id} comment={comment} />)
           ) : null}
         </Card>
       </div>

@@ -1,4 +1,4 @@
-import { ADD_POSTS, INCREMENT_VOTE, DECREMENT_VOTE, SORT_BY_TIME, SORT_BY_SCORE } from '../actions';
+import { ADD_POSTS, INCREMENT_POST_VOTE, DECREMENT_POST_VOTE, SORT_BY_TIME, SORT_BY_SCORE } from '../actions';
 import { TIME, SCORE } from '../utils/PostsComparatorHelper';
 
 const initialPostsState = {
@@ -16,7 +16,7 @@ export default function posts(state = initialPostsState, action) {
         ...state,
         posts: [...state.posts.filter(post => !newPostIds.includes(post.id)), ...action.posts],
       };
-    case INCREMENT_VOTE:
+    case INCREMENT_POST_VOTE:
       return {
         ...state,
         posts: state.posts.map(post => (
@@ -25,7 +25,7 @@ export default function posts(state = initialPostsState, action) {
             Object.assign({}, action.post, { voteScore: action.post.voteScore + 1 })
         )),
       };
-    case DECREMENT_VOTE:
+    case DECREMENT_POST_VOTE:
       return {
         ...state,
         posts: state.posts.map(post => (

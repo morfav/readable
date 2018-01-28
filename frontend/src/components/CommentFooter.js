@@ -10,15 +10,15 @@ import IconButton from 'material-ui/IconButton';
 
 import RaisedButton from 'material-ui/RaisedButton';
 
-import { DECREMENT_VOTE, INCREMENT_VOTE } from '../actions/';
+import { DECREMENT_COMMENT_VOTE, INCREMENT_COMMENT_VOTE } from '../actions/';
 
 const CommentFooter = ({ comment, vote }) => {
   return (
     <div style={{ width: '100%', position: 'relative', paddingBottom: '8px' }}>
       <div style={{ paddingLeft: 12 }}>
         <CardActions style={{ display: 'inline-flex', verticalAlign: 'bottom' }}>
-          <RaisedButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '36px', height: '24px' }} onClick={e => vote(DECREMENT_VOTE, e)} />
-          <RaisedButton icon={<AddIcon />} style={{ float: 'left', minWidth: '36px', height: '24px', marginRight: 0 }} onClick={e => vote(INCREMENT_VOTE, e)} />
+          <RaisedButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '36px', height: '24px' }} onClick={e => vote(DECREMENT_COMMENT_VOTE, e)} />
+          <RaisedButton icon={<AddIcon />} style={{ float: 'left', minWidth: '36px', height: '24px', marginRight: 0 }} onClick={e => vote(INCREMENT_COMMENT_VOTE, e)} />
         </CardActions>
         <Badge
           badgeContent={comment.voteScore}

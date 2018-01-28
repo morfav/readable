@@ -3,8 +3,10 @@ import { fetchPosts, fetchCategories, fetchCommentsForPost } from '../utils/api'
 export const ADD_CATEGORIES = 'ADD_CATEGORIES';
 export const ADD_COMMENTS = 'ADD_COMMENTS';
 export const ADD_POSTS = 'ADD_POSTS';
-export const INCREMENT_VOTE = 'INCREMENT_VOTE';
-export const DECREMENT_VOTE = 'DECREMENT_VOTE';
+export const INCREMENT_POST_VOTE = 'INCREMENT_POST_VOTE';
+export const DECREMENT_POST_VOTE = 'DECREMENT_POST_VOTE';
+export const INCREMENT_COMMENT_VOTE = 'INCREMENT_COMMENT_VOTE';
+export const DECREMENT_COMMENT_VOTE = 'DECREMENT_COMMENT_VOTE';
 export const SORT_BY_TIME = 'SORT_BY_TIME';
 export const SORT_BY_SCORE = 'SORT_BY_SCORE';
 
@@ -48,11 +50,17 @@ export const getComments = postIdUrl => dispatch => (
   fetchCommentsForPost(postIdUrl).then(comments => dispatch(addComments(comments)))
 );
 
-export function vote(type, post, onClickEvent) {
+export function vote(type, actionObject, onClickEvent) {
   suppressOnClick(onClickEvent);
+  if (actionObject.parentId) {
+    return {
+      type,
+      comment: actionObject,
+    };
+  }
   return {
     type,
-    post,
+    post: actionObject,
   };
 }
 
