@@ -22,18 +22,46 @@ import { Card, CardText } from 'material-ui/Card';
 
 import CommentHeader from '../components/CommentHeader';
 import CommentFooter from '../components/CommentFooter';
-import { vote, suppressOnClick } from '../actions/';
+import { vote, suppressOnClick, updateComment } from '../actions/';
+import EditComment from './EditComment';
 
 class Comment extends Component {
   constructor(props) {
     super(props);
 
     this.vote = this.vote.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.cancelEdit = this.cancelEdit.bind(this);
+    this.saveComment = this.saveComment.bind(this);
   }
+
+  state = {
+    editCommentShowing: false,
+  };
 
   vote = (type, e) => {
     this.props.vote(type, this.props.comment, e);
   };
+
+  handleClick = (e) => {
+    suppressOnClick(e);
+    this.setState({
+      editCommentShowing: true,
+    });
+  }
+
+  cancelEdit = () => {
+    this.setState({
+      editCommentShowing: false,
+    });
+  }
+
+  saveComment = (newText) => {
+    this.setState({
+      editCommentShowing: false,
+    });
+    this.props.updateComment(this.props.comment, newText);
+  }
 
   render() {
     const { comment } = this.props;
@@ -44,7 +72,9 @@ class Comment extends Component {
     }
     return (
       <div className="Comment">
-        <Card>
+        <Card
+          onClick={this.handleClick}
+        >
           <CommentHeader
             comment={comment}
             commentTime={new Date(comment.timestamp).toUTCString()}
@@ -57,6 +87,12 @@ class Comment extends Component {
             vote={this.vote}
           />
         </Card>
+        <EditComment
+          open={this.state.editCommentShowing}
+          cancelEdit={this.cancelEdit}
+          comment={comment}
+          saveComment={this.saveComment}
+        />
       </div>
     );
   }
@@ -64,6 +100,7 @@ class Comment extends Component {
 
 const mapDispatchToProps = dispatch => ({
   vote: (type, comment, e) => dispatch(vote(type, comment, e)),
+  updateComment: (comment, newBody) => dispatch(updateComment(comment, newBody)),
 });
 
 export default connect(null, mapDispatchToProps)(Comment);

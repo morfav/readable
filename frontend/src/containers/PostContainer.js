@@ -11,7 +11,8 @@ const onCardClick = (e, history, postIdUrl, category, id) => {
   if (!postIdUrl) {
     history.push(`/${category}/${id}`);
   } else {
-    history.goBack();
+    // history.goBack();
+    history.push(`/${category}`);
   }
 };
 

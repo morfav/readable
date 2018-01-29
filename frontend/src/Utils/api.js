@@ -1,26 +1,47 @@
 const server = 'http://localhost:3001';
-const authHeader = { headers: { Authorization: 'whatever-you-want' } };
+const requestHeaders = { Authorization: 'whatever-you-want', 'Content-Type': 'application/json', Accept: 'application/json' };
 
 
 export function fetchCategories() {
-  return fetch(`${server}/categories`,
-    authHeader,
-  )
+  return fetch(`${server}/categories`, {
+    headers: requestHeaders,
+  })
     .then(res => res.json());
 }
 
 export function fetchPosts(postId = null) {
-  return fetch(`${server}/posts${postId ? `/${postId}` : ''}`,
-    authHeader,
-  )
+  return fetch(`${server}/posts${postId ? `/${postId}` : ''}`, {
+    headers: requestHeaders,
+  })
     .then(res => res.json());
 }
 
 export function fetchCommentsForPost(postId) {
-  return fetch(`${server}/posts/${postId}/comments`,
-    authHeader,
-  )
+  return fetch(`${server}/posts/${postId}/comments`, {
+    headers: requestHeaders,
+  })
     .then(res => res.json());
+}
+
+export function postCommentVote(commentId, type) {
+  return fetch(`${server}/comments/${commentId}`, {
+    method: 'POST',
+    headers: requestHeaders,
+    body: JSON.stringify({
+      option: type,
+    }),
+  });
+}
+
+export function putUpdateComment(commentId, commentBody) {
+  return fetch(`${server}/comments/${commentId}`, {
+    method: 'PUT',
+    headers: requestHeaders,
+    body: JSON.stringify({
+      timestamp: new Date(),
+      body: commentBody,
+    }),
+  });
 }
 
 
@@ -36,7 +57,6 @@ export function fetchCommentsForPost(postId) {
  | `GET /posts/:id/comments` | Get all the comments for a single post. | |
  | `POST /comments` | Add a comment to a post. | **id** - Any unique ID. As with posts, UUID is probably the best here. <br> **timestamp** - [Timestamp] Get this however you want. <br> **body** - [String] <br> **author** - [String] <br> **parentId** - Should match a post id in the database. |
  | `GET /comments/:id` | Get the details for a single comment. | |
- | `POST /comments/:id` | Used for voting on a comment. | **option** - [String]: Either `"upVote"` or `"downVote"`.  |
  | `PUT /comments/:id` | Edit the details of an existing comment. | **timestamp** - timestamp. Get this however you want. <br> **body** - [String] |
  | `DELETE /comments/:id` | Sets a comment's deleted flag to `true`.
  */

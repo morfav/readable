@@ -2,12 +2,10 @@
  * Post Detail View
     Post is displayed with title, body, author, number of comments, current score and voting mechanism. Post should have buttons or links for editing or deleting that post.
 
-    should list all of the comments for that post
     should have a control to add a new comment.
     implement comment form however you want (inline, modal, etc.)
     comments should also have controls for editing or deleting
 
-    Listed comments are displayed with author, current score, and a voting mechanism to upvote or downvote the comment.
     Comments should have buttons or links for editing or deleting that comment.
     The voting mechanism works and correctly displays the new vote score after clicking for both the post and comments.
     All comments for a post are displayed below the post body.
@@ -20,9 +18,10 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Card, CardText } from 'material-ui/Card';
 
+
 import PostHeader from './PostHeader';
 import PostFooter from './PostFooter';
-import Comment from './Comment';
+import Comments from './Comments';
 import { suppressOnClick, getPosts, getComments } from '../actions/';
 
 class Post extends Component {
@@ -83,9 +82,9 @@ class Post extends Component {
             categoryUrl={categoryUrl}
           />
           {postIdUrl ? (
-            comments.map(comment =>
-              <Comment key={comment.id} comment={comment} />)
-          ) : null}
+            <Comments comments={comments} />
+          )
+            : null}
         </Card>
       </div>
     );
