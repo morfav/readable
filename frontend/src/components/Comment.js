@@ -15,92 +15,37 @@
     comments should also have controls for editing or deleting
  */
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardText } from 'material-ui/Card';
 
 import CommentHeader from '../components/CommentHeader';
 import CommentFooter from '../components/CommentFooter';
-import { vote, suppressOnClick, updateComment } from '../actions/';
-import EditComment from './EditComment';
 
-class Comment extends Component {
-  constructor(props) {
-    super(props);
-
-    this.vote = this.vote.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.cancelEdit = this.cancelEdit.bind(this);
-    this.saveComment = this.saveComment.bind(this);
-  }
-
-  state = {
-    editCommentShowing: false,
-  };
-
-  vote = (type, e) => {
-    this.props.vote(type, this.props.comment, e);
-  };
-
-  handleClick = (e) => {
-    suppressOnClick(e);
-    this.setState({
-      editCommentShowing: true,
-    });
-  }
-
-  cancelEdit = () => {
-    this.setState({
-      editCommentShowing: false,
-    });
-  }
-
-  saveComment = (newText) => {
-    this.setState({
-      editCommentShowing: false,
-    });
-    this.props.updateComment(this.props.comment, newText);
-  }
-
-  render() {
-    const { comment } = this.props;
-    if (!comment) {
-      return (
-        <div>Loading...</div>
-      );
-    }
+const Comment = ({ comment, handleClick}) => {
+  if (!comment) {
     return (
-      <div className="Comment">
-        <Card
-          onClick={this.handleClick}
-        >
-          <CommentHeader
-            comment={comment}
-            commentTime={new Date(comment.timestamp).toUTCString()}
-          />
-          <CardText style={{ paddingBottom: '0px' }}>
-            {comment.body}
-          </CardText>
-          <CommentFooter
-            comment={comment}
-            vote={this.vote}
-          />
-        </Card>
-        <EditComment
-          open={this.state.editCommentShowing}
-          cancelEdit={this.cancelEdit}
-          comment={comment}
-          saveComment={this.saveComment}
-        />
-      </div>
+      <div>Loading...</div>
     );
   }
-}
+  return (
+    <div className="Comment">
+      <Card
+        onClick={e => handleClick(comment, e)}
+      >
+        <CommentHeader
+          comment={comment}
+          commentTime={new Date(comment.timestamp).toUTCString()}
+        />
+        <CardText style={{ paddingBottom: '0px' }}>
+          {comment.body}
+        </CardText>
+        <CommentFooter
+          comment={comment}
+        />
+      </Card>
+    </div>
+  );
+};
 
-const mapDispatchToProps = dispatch => ({
-  vote: (type, comment, e) => dispatch(vote(type, comment, e)),
-  updateComment: (comment, newBody) => dispatch(updateComment(comment, newBody)),
-});
-
-export default connect(null, mapDispatchToProps)(Comment);
+export default Comment;
