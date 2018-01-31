@@ -1,6 +1,6 @@
 import uuidv4 from 'uuid/v4';
 
-import { fetchPosts, fetchCategories, fetchCommentsForPost, postCommentVote, putUpdateComment, postCreateComment } from '../utils/api';
+import { fetchPosts, fetchCategories, fetchCommentsForPost, postCommentVote, putUpdateComment, postCreateComment, deleteCommentApi } from '../utils/api';
 
 export const ADD_CATEGORIES = 'ADD_CATEGORIES';
 export const ADD_COMMENTS = 'ADD_COMMENTS';
@@ -69,6 +69,11 @@ export const updateComment = (comment, commentBody) => (dispatch) => {
 
 export const createComment = (commentBody, parentId) => (dispatch) => {
   postCreateComment(uuidv4(), commentBody, parentId).then(() => dispatch(getComments(parentId))).then(() => dispatch(getPosts(parentId)));
+};
+
+export const deleteComment = (comment, onClickEvent) => (dispatch) => {
+  suppressOnClick(onClickEvent);
+  deleteCommentApi(comment.id).then(() => dispatch(getComments(comment.parentId))).then(() => dispatch(getPosts(comment.parentId)));
 };
 
 export function sortPosts(type, onClickEvent) {

@@ -69,7 +69,7 @@ class Comments extends Component {
         {comments.map(comment => (
           <Comment key={comment.id} comment={comment} handleClick={this.handleClick} />))}
         <FloatingActionButton
-          style={{ position: 'absolute', right: 30, bottom: 30 }}
+          style={{ position: 'fixed', right: 30, bottom: 30 }}
           onClick={(e) => this.createCommentClicked(e)}
         >
           <CommentIcon />

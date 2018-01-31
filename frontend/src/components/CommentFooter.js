@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import AddIcon from 'material-ui/svg-icons/content/add';
 import RemoveIcon from 'material-ui/svg-icons/content/remove';
 import PlusOneIcon from 'material-ui/svg-icons/social/plus-one';
+import Delete from 'material-ui/svg-icons/action/delete';
 
 import Badge from 'material-ui/Badge';
 import { CardActions } from 'material-ui/Card';
@@ -11,7 +12,7 @@ import IconButton from 'material-ui/IconButton';
 
 import RaisedButton from 'material-ui/RaisedButton';
 
-import { vote, DECREMENT_COMMENT_VOTE, INCREMENT_COMMENT_VOTE } from '../actions/';
+import { vote, DECREMENT_COMMENT_VOTE, INCREMENT_COMMENT_VOTE, deleteComment } from '../actions/';
 
 const CommentFooter = ({ comment, dispatch }) => {
   return (
@@ -35,7 +36,7 @@ const CommentFooter = ({ comment, dispatch }) => {
           badgeContent={comment.voteScore}
           secondary
           badgeStyle={{ top: 12, right: 12 }}
-          style={{ paddingLeft: 0, paddingBottom: 0, verticalAlign: 'middle' }}
+          style={{ paddingLeft: 0, paddingBottom: 0, verticalAlign: 'middle', height: '44px' }}
         >
           <IconButton tooltip="Votes" iconStyle={{ display: 'inline-flex' }}>
             <div>
@@ -43,6 +44,9 @@ const CommentFooter = ({ comment, dispatch }) => {
             </div>
           </IconButton>
         </Badge>
+        <IconButton tooltip="Delete comment" style={{ verticalAlign: 'bottom' }} onClick={e => dispatch(deleteComment(comment, e))}>
+          <Delete />
+        </IconButton>
       </div>
     </div>
   );

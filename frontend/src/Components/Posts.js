@@ -13,7 +13,7 @@ const Posts = ({ posts }) => (
         post={post}
       />
     ))}
-    <FloatingActionButton style={{ position: 'absolute', right: 30, bottom: 30 }}>
+    <FloatingActionButton style={{ position: 'fixed', right: 30, bottom: 30 }}>
       <ContentAdd />
     </FloatingActionButton>
   </div>

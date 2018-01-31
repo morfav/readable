@@ -8,9 +8,10 @@ export default function comments(state = emptyComments, action) {
   switch (action.type) {
     case ADD_COMMENTS:
       const newCommentIds = action.comments.map(comment => comment.id);
+      const newParentIds = action.comments.reduce((existingIds, comment) => new Set([...existingIds.values(), comment.parentId]), new Set());
       return {
         ...state,
-        comments: [...state.comments.filter(comment => !newCommentIds.includes(comment.id)), ...action.comments],
+        comments: [...state.comments.filter(comment => (!newCommentIds.includes(comment.id) && !newParentIds.has(comment.parentId))), ...action.comments],
       };
     case INCREMENT_COMMENT_VOTE:
       return {
