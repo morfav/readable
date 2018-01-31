@@ -65,6 +65,15 @@ export function deleteCommentApi(commentId) {
   });
 }
 
+export function postVoteApi(postId, type) {
+  return fetch(`${server}/posts/${postId}`, {
+    method: 'POST',
+    headers: requestHeaders,
+    body: JSON.stringify({
+      option: type,
+    }),
+  });
+}
 
 /**
  | `GET /:category/posts` | Get all of the posts for a particular category. |  |

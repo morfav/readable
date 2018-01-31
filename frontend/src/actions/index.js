@@ -1,6 +1,6 @@
 import uuidv4 from 'uuid/v4';
 
-import { fetchPosts, fetchCategories, fetchCommentsForPost, postCommentVote, putUpdateComment, postCreateComment, deleteCommentApi } from '../utils/api';
+import { fetchPosts, fetchCategories, fetchCommentsForPost, postCommentVote, putUpdateComment, postCreateComment, deleteCommentApi, postVoteApi } from '../utils/api';
 
 export const ADD_CATEGORIES = 'ADD_CATEGORIES';
 export const ADD_COMMENTS = 'ADD_COMMENTS';
@@ -56,11 +56,9 @@ export const vote = (type, actionObject, onClickEvent) => (dispatch) => {
   suppressOnClick(onClickEvent);
   if (actionObject.parentId) {
     postCommentVote(actionObject.id, type === INCREMENT_COMMENT_VOTE ? 'upVote' : 'downVote').then(() => dispatch(getComments(actionObject.parentId)));
+  } else {
+    postVoteApi(actionObject.id, type === INCREMENT_POST_VOTE ? 'upVote' : 'downVote').then(() => dispatch(getPosts(actionObject.id)));
   }
-  return {
-    type,
-    post: actionObject,
-  };
 };
 
 export const updateComment = (comment, commentBody) => (dispatch) => {
