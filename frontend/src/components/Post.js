@@ -1,6 +1,6 @@
 /**
  * Post Detail View
-    Post is displayed with title, body, author, number of comments, current score and voting mechanism. Post should have buttons or links for editing or deleting that post.
+    Post should have buttons or links for editing or deleting that post.
     should have controls to edit or delete the post
 
  */
@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Card, CardText } from 'material-ui/Card';
 
-
+import EditPostContainer from '../containers/EditPostContainer';
 import PostHeader from './PostHeader';
 import PostFooter from './PostFooter';
 import Comments from './Comments';
@@ -42,7 +42,7 @@ class Post extends Component {
   };
 
   render() {
-    const { post, history, getArrowIcon, categoryUrl, postTime, loading, onCardClick, postIdUrl, comments } = this.props;
+    const { post, history, getArrowIcon, categoryUrl, postTime, loading, onCardClick, postIdUrl, comments, editPost } = this.props;
     if (loading) {
       return (
         <div>Loading...</div>
@@ -72,12 +72,14 @@ class Post extends Component {
             sortPosts={this.sortPosts}
             getArrowIcon={type => getArrowIcon(type)}
             categoryUrl={categoryUrl}
+            editPost={editPost}
           />
           {postIdUrl ? (
             <Comments comments={comments} parentId={post.id} />
           )
             : null}
         </Card>
+        <EditPostContainer />
       </div>
     );
   }

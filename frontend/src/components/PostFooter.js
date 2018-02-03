@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import AddIcon from 'material-ui/svg-icons/content/add';
 import RemoveIcon from 'material-ui/svg-icons/content/remove';
 import PlusOneIcon from 'material-ui/svg-icons/social/plus-one';
+import ModeEditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
 import Badge from 'material-ui/Badge';
 import { CardActions } from 'material-ui/Card';
@@ -15,7 +16,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { SCORE } from '../utils/PostsComparatorHelper';
 import { DECREMENT_POST_VOTE, INCREMENT_POST_VOTE, SORT_BY_SCORE, suppressOnClick } from '../actions/';
 
-const PostFooter = ({ post, vote, sortPosts, getArrowIcon, categoryUrl }) => {
+const PostFooter = ({ post, vote, sortPosts, getArrowIcon, categoryUrl, editPost }) => {
   const icon = getArrowIcon(SCORE);
   return (
     <div style={{ width: '100%', position: 'relative', paddingBottom: '8px' }}>
@@ -38,6 +39,9 @@ const PostFooter = ({ post, vote, sortPosts, getArrowIcon, categoryUrl }) => {
             </div>
           </IconButton>
         </Badge>
+        <IconButton tooltip="Edit Post" onClick={e => editPost(post.id, e)}>
+          <ModeEditIcon />
+        </IconButton>
         <Link
           to={categoryUrl}
           onClick={e => suppressOnClick(e)}

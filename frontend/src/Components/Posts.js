@@ -4,8 +4,9 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import PostContainer from '../containers/PostContainer';
+import EditPostContainer from '../containers/EditPostContainer';
 
-const Posts = ({ posts }) => (
+const Posts = ({ posts, newPostClicked }) => (
   <div>
     {posts.map(post => (
       <PostContainer
@@ -13,9 +14,10 @@ const Posts = ({ posts }) => (
         post={post}
       />
     ))}
-    <FloatingActionButton style={{ position: 'fixed', right: 30, bottom: 30 }}>
+    <FloatingActionButton style={{ position: 'fixed', right: 30, bottom: 30 }} onClick={newPostClicked}>
       <ContentAdd />
     </FloatingActionButton>
+    <EditPostContainer />
   </div>
 );
 

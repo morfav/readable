@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { TIME, getIcon } from '../utils/PostsComparatorHelper';
-import { vote, sortPosts, suppressOnClick } from '../actions/';
+import { vote, sortPosts, suppressOnClick, editExistingPost } from '../actions/';
 import Post from '../components/Post';
 import { categoriesToUrl, getUrlCategories, getPostId } from '../utils/urlTools';
 
@@ -51,6 +51,7 @@ const mapStateToProps = (state, { post, match, history }) => {
 const mapDispatchToProps = dispatch => ({
   vote: (type, post, e) => dispatch(vote(type, post, e)),
   sortPosts: (type, e) => dispatch(sortPosts(type, e)),
+  editPost: (postId, e) => dispatch(editExistingPost(postId, e)),
   dispatch,
 });
 

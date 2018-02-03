@@ -23,7 +23,7 @@ export function fetchCommentsForPost(postId) {
     .then(res => res.json());
 }
 
-export function postCommentVote(commentId, type) {
+export function commentVoteApi(commentId, type) {
   return fetch(`${server}/comments/${commentId}`, {
     method: 'POST',
     headers: requestHeaders,
@@ -33,24 +33,24 @@ export function postCommentVote(commentId, type) {
   });
 }
 
-export function putUpdateComment(commentId, commentBody) {
+export function updateCommentApi(commentId, commentBody) {
   return fetch(`${server}/comments/${commentId}`, {
     method: 'PUT',
     headers: requestHeaders,
     body: JSON.stringify({
-      timestamp: new Date(),
+      timestamp: Date.now(),
       body: commentBody,
     }),
   });
 }
 
-export function postCreateComment(commentId, commentBody, parentId) {
+export function createCommentApi(commentId, commentBody, parentId) {
   return fetch(`${server}/comments`, {
     method: 'POST',
     headers: requestHeaders,
     body: JSON.stringify({
       id: commentId,
-      timestamp: new Date(),
+      timestamp: Date.now(),
       body: commentBody,
       author: requestHeaders.Authorization,
       parentId,
@@ -75,15 +75,34 @@ export function postVoteApi(postId, type) {
   });
 }
 
+export function createPostApi(postId, postTitle, postBody, postCategory) {
+  return fetch(`${server}/posts`, {
+    method: 'POST',
+    headers: requestHeaders,
+    body: JSON.stringify({
+      id: postId,
+      timestamp: Date.now(),
+      title: postTitle,
+      body: postBody,
+      author: requestHeaders.Authorization,
+      category: postCategory,
+    }),
+  });
+}
+
+export function updatePostApi(postId, postTitle, postBody) {
+  return fetch(`${server}/posts/${postId}`, {
+    method: 'PUT',
+    headers: requestHeaders,
+    body: JSON.stringify({
+      title: postTitle,
+      body: postBody,
+    }),
+  });
+}
+
 /**
  | `GET /:category/posts` | Get all of the posts for a particular category. |  |
- | `GET /posts` | Get all of the posts. Useful for the main page when no category is selected. |  |
- | `POST /posts` | Add a new post. | **id** - UUID should be fine, but any unique id will work <br> **timestamp** - [Timestamp] Can in whatever format you like, you can use `Date.now()` if you like. <br> **title** - [String] <br> **body** - [String] <br> **author** - [String] <br> **category** -  Any of the categories listed in `categories.js`. Feel free to extend this list as you desire. |
- | `GET /posts/:id` | Get the details of a single post. | |
- | `POST /posts/:id` | Used for voting on a post. | **option** - [String]: Either `"upVote"` or `"downVote"`. |
- | `PUT /posts/:id` | Edit the details of an existing post. | **title** - [String] <br> **body** - [String] |
  | `DELETE /posts/:id` | Sets the deleted flag for a post to 'true'. <br> Sets the parentDeleted flag for all child comments to 'true'. | |
- | `GET /posts/:id/comments` | Get all the comments for a single post. | |
  | `GET /comments/:id` | Get the details for a single comment. | |
- | `DELETE /comments/:id` | Sets a comment's deleted flag to `true`.
  */

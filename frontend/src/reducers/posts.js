@@ -1,4 +1,4 @@
-import { ADD_POSTS, INCREMENT_POST_VOTE, DECREMENT_POST_VOTE, SORT_BY_TIME, SORT_BY_SCORE } from '../actions';
+import { ADD_POSTS, INCREMENT_POST_VOTE, DECREMENT_POST_VOTE, SORT_BY_TIME, SORT_BY_SCORE, EDIT_NEW_POST, EDIT_EXISTING_POST, STOP_EDITING_POST } from '../actions';
 import { TIME, SCORE } from '../utils/PostsComparatorHelper';
 
 const initialPostsState = {
@@ -6,6 +6,8 @@ const initialPostsState = {
   postsComparator: TIME,
   timeAscending: true,
   scoreAscending: true,
+  editingPost: false,
+  idOfEditedPost: null,
 };
 
 export default function posts(state = initialPostsState, action) {
@@ -45,6 +47,23 @@ export default function posts(state = initialPostsState, action) {
         ...state,
         scoreAscending: state.postsComparator === SCORE ? !state.scoreAscending : state.scoreAscending,
         postsComparator: SCORE,
+      };
+    case EDIT_NEW_POST:
+      return {
+        ...state,
+        editingPost: true,
+        idOfEditedPost: null,
+      };
+    case EDIT_EXISTING_POST:
+      return {
+        ...state,
+        editingPost: true,
+        idOfEditedPost: action.postId,
+      };
+    case STOP_EDITING_POST:
+      return {
+        ...state,
+        editingPost: false,
       };
     default:
       return state;

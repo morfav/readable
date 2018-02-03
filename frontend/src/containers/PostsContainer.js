@@ -5,6 +5,7 @@ import { getComparator, TIME } from '../utils/PostsComparatorHelper';
 import { urlToCategoriesArray, getUrlCategories } from '../utils/urlTools';
 
 import Posts from '../components/Posts';
+import { editNewPost } from '../actions/index';
 
 function mapStateToProps(state, ownProps) {
   const selectedCategories = urlToCategoriesArray(getUrlCategories(ownProps.match));
@@ -17,4 +18,10 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(Posts));
+function mapDispatchToProps(dispatch) {
+  return {
+    newPostClicked: () => dispatch(editNewPost()),
+  };
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts));
