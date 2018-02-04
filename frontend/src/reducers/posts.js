@@ -1,4 +1,4 @@
-import { ADD_POSTS, INCREMENT_POST_VOTE, DECREMENT_POST_VOTE, SORT_BY_TIME, SORT_BY_SCORE, EDIT_NEW_POST, EDIT_EXISTING_POST, STOP_EDITING_POST } from '../actions';
+import { ADD_POSTS, INCREMENT_POST_VOTE, DECREMENT_POST_VOTE, SORT_BY_TIME, SORT_BY_SCORE, EDIT_NEW_POST, EDIT_EXISTING_POST, STOP_EDITING_POST, SET_CATEGORY_POSTS } from '../actions';
 import { TIME, SCORE } from '../utils/PostsComparatorHelper';
 
 const initialPostsState = {
@@ -64,6 +64,11 @@ export default function posts(state = initialPostsState, action) {
       return {
         ...state,
         editingPost: false,
+      };
+    case SET_CATEGORY_POSTS:
+      return {
+        ...state,
+        posts: [...state.posts.filter(post => post.category !== action.category), ...action.posts],
       };
     default:
       return state;

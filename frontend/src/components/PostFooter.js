@@ -5,6 +5,7 @@ import AddIcon from 'material-ui/svg-icons/content/add';
 import RemoveIcon from 'material-ui/svg-icons/content/remove';
 import PlusOneIcon from 'material-ui/svg-icons/social/plus-one';
 import ModeEditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import Delete from 'material-ui/svg-icons/action/delete';
 
 import Badge from 'material-ui/Badge';
 import { CardActions } from 'material-ui/Card';
@@ -16,7 +17,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { SCORE } from '../utils/PostsComparatorHelper';
 import { DECREMENT_POST_VOTE, INCREMENT_POST_VOTE, SORT_BY_SCORE, suppressOnClick } from '../actions/';
 
-const PostFooter = ({ post, vote, sortPosts, getArrowIcon, categoryUrl, editPost }) => {
+const PostFooter = ({ post, vote, sortPosts, getArrowIcon, categoryUrl, editPost, deletePost }) => {
   const icon = getArrowIcon(SCORE);
   return (
     <div style={{ width: '100%', position: 'relative', paddingBottom: '8px' }}>
@@ -39,8 +40,11 @@ const PostFooter = ({ post, vote, sortPosts, getArrowIcon, categoryUrl, editPost
             </div>
           </IconButton>
         </Badge>
-        <IconButton tooltip="Edit Post" onClick={e => editPost(post.id, e)}>
+        <IconButton tooltip="Edit Post" style={{ verticalAlign: 'bottom' }} onClick={e => editPost(post.id, e)}>
           <ModeEditIcon />
+        </IconButton>
+        <IconButton tooltip="Delete post" style={{ verticalAlign: 'bottom' }} onClick={e => deletePost(post.id, post.category, e)}>
+          <Delete />
         </IconButton>
         <Link
           to={categoryUrl}

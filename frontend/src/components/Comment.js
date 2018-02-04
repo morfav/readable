@@ -42,6 +42,7 @@ const Comment = ({ comment, handleClick}) => {
         </CardText>
         <CommentFooter
           comment={comment}
+          handleClick={handleClick}
         />
       </Card>
     </div>

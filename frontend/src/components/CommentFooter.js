@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import AddIcon from 'material-ui/svg-icons/content/add';
 import RemoveIcon from 'material-ui/svg-icons/content/remove';
 import PlusOneIcon from 'material-ui/svg-icons/social/plus-one';
+import ModeEditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import Delete from 'material-ui/svg-icons/action/delete';
 
 import Badge from 'material-ui/Badge';
@@ -14,7 +15,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import { vote, DECREMENT_COMMENT_VOTE, INCREMENT_COMMENT_VOTE, deleteComment } from '../actions/';
 
-const CommentFooter = ({ comment, dispatch }) => {
+const CommentFooter = ({ comment, dispatch, handleClick }) => {
   return (
     <div style={{ width: '100%', position: 'relative', paddingBottom: '8px' }}>
       <div style={{ paddingLeft: 12 }}>
@@ -44,6 +45,9 @@ const CommentFooter = ({ comment, dispatch }) => {
             </div>
           </IconButton>
         </Badge>
+        <IconButton tooltip="Edit Post" style={{ verticalAlign: 'bottom' }} onClick={e => handleClick(comment, e)}>
+          <ModeEditIcon />
+        </IconButton>
         <IconButton tooltip="Delete comment" style={{ verticalAlign: 'bottom' }} onClick={e => dispatch(deleteComment(comment, e))}>
           <Delete />
         </IconButton>

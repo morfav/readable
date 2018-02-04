@@ -13,11 +13,16 @@ const PostHeader = ({ post, sortPosts, getArrowIcon, postTime }) => {
   const icon = getArrowIcon(TIME);
   return (
     <div>
+      <FlatButton
+        label={postTime}
+        labelPosition="before"
+        onClick={e => sortPosts(SORT_BY_TIME, e)}
+        style={{ width: 'auto' }}
+        icon={icon}
+      />
       <div
         style={{
-          position: 'absolute',
-          right: 24,
-          zIndex: 1000,
+          float: 'right',
         }}
       >
         <Badge
@@ -30,13 +35,6 @@ const PostHeader = ({ post, sortPosts, getArrowIcon, postTime }) => {
           </IconButton>
         </Badge>
       </div>
-      <FlatButton
-        label={postTime}
-        labelPosition="before"
-        onClick={e => sortPosts(SORT_BY_TIME, e)}
-        style={{ width: 'auto' }}
-        icon={icon}
-      />
       <CardTitle
         title={post.title}
         subtitle={`by ${post.author}`}

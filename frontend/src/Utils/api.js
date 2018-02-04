@@ -9,8 +9,15 @@ export function fetchCategories() {
     .then(res => res.json());
 }
 
-export function fetchPosts(postId = null) {
-  return fetch(`${server}/posts${postId ? `/${postId}` : ''}`, {
+export function fetchPostById(postId) {
+  return fetch(`${server}/posts/${postId}`, {
+    headers: requestHeaders,
+  })
+    .then(res => res.json());
+}
+
+export function fetchAllPosts() {
+  return fetch(`${server}/posts`, {
     headers: requestHeaders,
   })
     .then(res => res.json());
@@ -101,8 +108,21 @@ export function updatePostApi(postId, postTitle, postBody) {
   });
 }
 
+export function deletePostApi(postId) {
+  return fetch(`${server}/posts/${postId}`, {
+    method: 'DELETE',
+    headers: requestHeaders,
+  });
+}
+
+export function fetchPostsForCategoryApi(postCategory) {
+  return fetch(`${server}/${postCategory}/posts`, {
+    headers: requestHeaders,
+  })
+    .then(res => res.json());
+}
+
 /**
  | `GET /:category/posts` | Get all of the posts for a particular category. |  |
- | `DELETE /posts/:id` | Sets the deleted flag for a post to 'true'. <br> Sets the parentDeleted flag for all child comments to 'true'. | |
  | `GET /comments/:id` | Get the details for a single comment. | |
  */

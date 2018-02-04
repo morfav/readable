@@ -14,7 +14,7 @@ import EditPostContainer from '../containers/EditPostContainer';
 import PostHeader from './PostHeader';
 import PostFooter from './PostFooter';
 import Comments from './Comments';
-import { suppressOnClick, getPosts, getComments } from '../actions/';
+import { suppressOnClick, getPosts, getComments, deletePost } from '../actions/';
 
 class Post extends Component {
   constructor(props) {
@@ -22,6 +22,7 @@ class Post extends Component {
 
     this.sortPosts = this.sortPosts.bind(this);
     this.vote = this.vote.bind(this);
+    this.deletePost = this.deletePost.bind(this);
   }
 
   componentDidMount() {
@@ -41,6 +42,12 @@ class Post extends Component {
     !this.props.postIdUrl && this.props.sortPosts(type)
   };
 
+  deletePost = (postId, postCategory, onClickEvent) => {
+    suppressOnClick(onClickEvent);
+    const { dispatch } = this.props;
+    dispatch(deletePost(postId, postCategory));
+  }
+
   render() {
     const { post, history, getArrowIcon, categoryUrl, postTime, loading, onCardClick, postIdUrl, comments, editPost } = this.props;
     if (loading) {
@@ -52,6 +59,7 @@ class Post extends Component {
       <div className="Post">
         <Card
           onClick={e => onCardClick(e)}
+          style={{ maxWidth: '800px' }}
         >
           <PostHeader
             post={post}
@@ -73,6 +81,7 @@ class Post extends Component {
             getArrowIcon={type => getArrowIcon(type)}
             categoryUrl={categoryUrl}
             editPost={editPost}
+            deletePost={this.deletePost}
           />
           {postIdUrl ? (
             <Comments comments={comments} parentId={post.id} />

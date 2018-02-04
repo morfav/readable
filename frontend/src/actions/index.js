@@ -1,8 +1,8 @@
 import uuidv4 from 'uuid/v4';
 
-import { fetchPosts, fetchCategories, fetchCommentsForPost, commentVoteApi,
+import { fetchPostById, fetchAllPosts, fetchCategories, fetchCommentsForPost, commentVoteApi,
   updateCommentApi, createCommentApi, deleteCommentApi, postVoteApi,
-  createPostApi, updatePostApi } from '../utils/api';
+  createPostApi, updatePostApi, deletePostApi, fetchPostsForCategoryApi } from '../utils/api';
 
 export const ADD_CATEGORIES = 'ADD_CATEGORIES';
 export const ADD_COMMENTS = 'ADD_COMMENTS';
@@ -16,6 +16,7 @@ export const SORT_BY_SCORE = 'SORT_BY_SCORE';
 export const EDIT_NEW_POST = 'EDIT_NEW_POST';
 export const EDIT_EXISTING_POST = 'EDIT_EXISTING_POST';
 export const STOP_EDITING_POST = 'STOP_EDITING_POST';
+export const SET_CATEGORY_POSTS = 'SET_CATEGORY_POSTS';
 
 export const suppressOnClick = (onClickEvent) => {
   if (onClickEvent) {
@@ -34,7 +35,6 @@ export const getCategories = () => dispatch => (
   fetchCategories().then(({ categories }) => dispatch(addCategories(categories)))
 );
 
-
 export function addPosts(posts) {
   return {
     type: ADD_POSTS,
@@ -42,9 +42,13 @@ export function addPosts(posts) {
   };
 }
 
-export const getPosts = postIdUrl => dispatch => (
-  fetchPosts(postIdUrl).then(posts => dispatch(addPosts(postIdUrl ? [posts] : posts)))
-);
+export const getPosts = postIdUrl => (dispatch) => {
+  if (postIdUrl) {
+    fetchPostById(postIdUrl).then(post => post.id && dispatch(addPosts([post])));
+  } else {
+    fetchAllPosts().then(posts => dispatch(addPosts(posts)));
+  }
+}
 
 export function addComments(comments) {
   return {
@@ -112,4 +116,20 @@ export const updatePost = (postId, postTitle, postBody, postCategory) => (dispat
   } else {
     updatePostApi(postId, postTitle, postBody).then(() => dispatch(stopEditingPost())).then(() => dispatch(getPosts(postId)));
   }
+};
+
+export function setPostsForCategory(posts, category) {
+  return {
+    type: SET_CATEGORY_POSTS,
+    posts,
+    category,
+  };
+}
+
+export const getAllPostsForCategory = postCategory => (dispatch) => {
+  fetchPostsForCategoryApi(postCategory).then(posts => dispatch(setPostsForCategory(posts, postCategory)));
+}
+
+export const deletePost = (postId, postCategory) => (dispatch) => {
+  deletePostApi(postId).then(() => dispatch(getAllPostsForCategory(postCategory)));
 };
