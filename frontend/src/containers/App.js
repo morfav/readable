@@ -1,13 +1,11 @@
-import { Route } from 'react-router-dom';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 
-import { addCategories, getPosts, getCategories } from '../actions/';
+import { getPosts, getCategories } from '../actions/';
 import { urlToCategoriesArray, categoriesToUrl, getUrlCategories } from '../utils/urlTools';
 
 import Categories from '../components/Categories';
-import PostContainer from '../containers/PostContainer';
 import PostsContainer from './PostsContainer';
 
 class App extends Component {
@@ -27,24 +25,9 @@ class App extends Component {
             categoryUrl={category => categoriesToUrl(this.props.urlCategories)(category)}
           />
         </div>
-        <Route
-          exact
-          path="/:category/:post_id"
-          render={() => (
-            <div style={{ paddingLeft: '256px' }}>
-              <PostContainer post={this.props.posts.find(post => post.id === this.props.urlPost)} />
-            </div>
-          )}
-        />
-        <Route
-          exact
-          path="/:category?"
-          render={() => (
-            <div style={{ paddingLeft: '256px' }}>
-              <PostsContainer />
-            </div>
-          )}
-        />
+        <div style={{ paddingLeft: '256px' }}>
+          <PostsContainer />
+        </div>
       </div>
     );
   }

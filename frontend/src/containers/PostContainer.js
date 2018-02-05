@@ -41,10 +41,14 @@ const mapStateToProps = (state, { post, match, history }) => {
       comments,
       onCardClick: e => onCardClick(e, history, postIdUrl, post.category, post.id),
     });
+  } else if (state.posts.postDetailsLoading) {
+    return ({
+      postIdUrl,
+      loading: true,
+    });
   }
   return ({
-    postIdUrl,
-    loading: true,
+    postNotFound: true,
   });
 };
 

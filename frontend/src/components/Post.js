@@ -1,10 +1,3 @@
-/**
- * Post Detail View
-    Post should have buttons or links for editing or deleting that post.
-    should have controls to edit or delete the post
-
- */
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -25,9 +18,9 @@ class Post extends Component {
     this.deletePost = this.deletePost.bind(this);
   }
 
-  componentDidMount() {
-    if (this.props.postIdUrl) {
-      const { postIdUrl, dispatch } = this.props;
+  componentWillReceiveProps(nextProps) {
+    if (this.props.postIdUrl !== nextProps.postIdUrl) {
+      const { postIdUrl, dispatch } = nextProps;
       dispatch(getPosts(postIdUrl));
       dispatch(getComments(postIdUrl));
     }
@@ -44,15 +37,22 @@ class Post extends Component {
 
   deletePost = (postId, postCategory, onClickEvent) => {
     suppressOnClick(onClickEvent);
+    if (postId) {
+      this.props.history.push(`/${postCategory}`);
+    }
     const { dispatch } = this.props;
     dispatch(deletePost(postId, postCategory));
   }
 
   render() {
-    const { post, history, getArrowIcon, categoryUrl, postTime, loading, onCardClick, postIdUrl, comments, editPost } = this.props;
+    const { post, history, getArrowIcon, categoryUrl, postTime, loading, onCardClick, postIdUrl, comments, editPost, postNotFound } = this.props;
     if (loading) {
       return (
         <div>Loading...</div>
+      );
+    } else if (postNotFound) {
+      return (
+        <div>Post not found</div>
       );
     }
     return (

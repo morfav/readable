@@ -17,6 +17,8 @@ export const EDIT_NEW_POST = 'EDIT_NEW_POST';
 export const EDIT_EXISTING_POST = 'EDIT_EXISTING_POST';
 export const STOP_EDITING_POST = 'STOP_EDITING_POST';
 export const SET_CATEGORY_POSTS = 'SET_CATEGORY_POSTS';
+export const START_POST_DETAIL_LOAD = 'START_POST_DETAIL_LOAD';
+export const STOP_POST_DETAIL_LOAD = 'STOP_POST_DETAIL_LOAD';
 
 export const suppressOnClick = (onClickEvent) => {
   if (onClickEvent) {
@@ -35,20 +37,34 @@ export const getCategories = () => dispatch => (
   fetchCategories().then(({ categories }) => dispatch(addCategories(categories)))
 );
 
-export function addPosts(posts) {
+export function postDetailsLoaded() {
+  return {
+    type: STOP_POST_DETAIL_LOAD,
+  };
+}
+
+export const addPosts = (posts) => {
+  // dispatch(postDetailsLoaded());
   return {
     type: ADD_POSTS,
     posts,
+  };
+};
+
+export function postDetailsLoading() {
+  return {
+    type: START_POST_DETAIL_LOAD,
   };
 }
 
 export const getPosts = postIdUrl => (dispatch) => {
   if (postIdUrl) {
-    fetchPostById(postIdUrl).then(post => post.id && dispatch(addPosts([post])));
+    dispatch(postDetailsLoading());
+    fetchPostById(postIdUrl).then(post => dispatch(postDetailsLoaded()) && post.id && dispatch(addPosts([post])));
   } else {
     fetchAllPosts().then(posts => dispatch(addPosts(posts)));
   }
-}
+};
 
 export function addComments(comments) {
   return {
