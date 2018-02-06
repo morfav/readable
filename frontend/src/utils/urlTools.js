@@ -32,5 +32,5 @@ export const getUrlCategories = (match) => {
 };
 
 export const getPostId = (match) => {
-  return match.params.post_id ? match.params.post_id : 0;
+  return match.params.post_id ? match.params.post_id : '';
 };

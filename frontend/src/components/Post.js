@@ -7,7 +7,7 @@ import EditPostContainer from '../containers/EditPostContainer';
 import PostHeader from './PostHeader';
 import PostFooter from './PostFooter';
 import Comments from './Comments';
-import { suppressOnClick, getPosts, getComments, deletePost } from '../actions/';
+import { suppressOnClick, getComments, deletePost } from '../actions/';
 
 class Post extends Component {
   constructor(props) {
@@ -19,9 +19,8 @@ class Post extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.postIdUrl !== nextProps.postIdUrl) {
+    if (this.props.postIdUrl !== nextProps.postIdUrl && nextProps.postIdUrl) {
       const { postIdUrl, dispatch } = nextProps;
-      dispatch(getPosts(postIdUrl));
       dispatch(getComments(postIdUrl));
     }
   }

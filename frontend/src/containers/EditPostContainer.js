@@ -1,10 +1,9 @@
-// postTitle, postBody, postCategory, categories, open, savePost, cancelEdit, postBodyEdited, postTitleEdited, postCategoryChanged
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import EditPost from '../components/EditPost';
 import { updatePost, stopEditingPost } from '../actions/';
-
 
 class EditPostContainer extends Component {
   constructor() {
@@ -17,25 +16,30 @@ class EditPostContainer extends Component {
   }
 
   state = {
-    postId: null,
+    postId: '',
     postTitle: '',
     postBody: '',
-    postCategory: null,
+    postCategory: '',
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.open && nextProps.open) {
+    const {
+      open, postIdProps, postTitleProps, postBodyProps, postCategoryProps,
+    } = nextProps;
+    if (!this.props.open && open) {
       this.setState({
-        postId: nextProps.postIdProps,
-        postTitle: nextProps.postTitleProps,
-        postBody: nextProps.postBodyProps,
-        postCategory: nextProps.postCategoryProps,
+        postId: postIdProps,
+        postTitle: postTitleProps,
+        postBody: postBodyProps,
+        postCategory: postCategoryProps,
       });
     }
   }
 
   savePost() {
-    const { postId, postTitle, postBody, postCategory } = this.state;
+    const {
+      postId, postTitle, postBody, postCategory,
+    } = this.state;
     this.props.savePostAction(postId, postTitle, postBody, postCategory);
   }
 
@@ -74,7 +78,8 @@ class EditPostContainer extends Component {
 const mapStateToProps = (state) => {
   const open = state.posts.editingPost;
   if (state.posts.idOfEditedPost) {
-    const post = state.posts.posts.find(postElement => postElement.id === state.posts.idOfEditedPost);
+    const post = state.posts.posts.find(postElement =>
+      postElement.id === state.posts.idOfEditedPost);
     return ({
       newPost: false,
       postIdProps: post.id,
@@ -87,18 +92,28 @@ const mapStateToProps = (state) => {
   }
   return ({
     newPost: true,
-    postIdProps: null,
+    postIdProps: '',
     postTitleProps: '',
     postBodyProps: '',
-    postCategoryProps:  state.categories.categories[0] ? state.categories.categories[0].name : '',
+    postCategoryProps: state.categories.categories[0] ? state.categories.categories[0].name : '',
     categories: state.categories.categories,
     open,
   });
 };
 
 const mapDispatchToProps = dispatch => ({
-  savePostAction: (postId, postTitle, postBody, postCategory) => dispatch(updatePost(postId, postTitle, postBody, postCategory)),
+  savePostAction: (postId, postTitle, postBody, postCategory) =>
+    dispatch(updatePost(postId, postTitle, postBody, postCategory)),
   cancelEdit: () => dispatch(stopEditingPost()),
 });
+
+EditPostContainer.propTypes = {
+  open: PropTypes.bool.isRequired,
+  postIdProps: PropTypes.string.isRequired,
+  postTitleProps: PropTypes.string.isRequired,
+  postBodyProps: PropTypes.string.isRequired,
+  postCategoryProps: PropTypes.string.isRequired,
+  savePostAction: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditPostContainer);

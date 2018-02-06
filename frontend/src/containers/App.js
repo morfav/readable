@@ -1,28 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import './App.css';
+import Categories from '../components/Categories';
+import PostsContainer from './PostsContainer';
 
 import { getPosts, getCategories } from '../actions/';
 import { urlToCategoriesArray, categoriesToUrl, getUrlCategories } from '../utils/urlTools';
 
-import Categories from '../components/Categories';
-import PostsContainer from './PostsContainer';
-
 class App extends Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(getPosts(null));
-    dispatch(getCategories());
+    const { loadPosts, loadCategories } = this.props;
+    loadPosts();
+    loadCategories();
   }
 
   render() {
+    const { categories, urlCategories } = this.props;
     return (
       <div className="App">
         <div>
           <Categories
-            categories={this.props.categories}
-            selectedCategories={urlToCategoriesArray(this.props.urlCategories)}
-            categoryUrl={category => categoriesToUrl(this.props.urlCategories)(category)}
+            categories={categories}
+            selectedCategories={urlToCategoriesArray(urlCategories)}
+            categoryUrl={category => categoriesToUrl(urlCategories)(category)}
           />
         </div>
         <div style={{ paddingLeft: '256px' }}>
@@ -35,17 +37,23 @@ class App extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    posts: state.posts.posts,
     categories: state.categories.categories.sort(),
     urlCategories: getUrlCategories(ownProps.match),
-    urlPost: ownProps.match.params.post_id ? ownProps.match.params.post_id : null,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    loadPosts: () => dispatch(getPosts(null)),
+    loadCategories: () => dispatch(getCategories()),
   };
 }
+
+App.propTypes = {
+  categories: PropTypes.arrayOf(String).isRequired,
+  urlCategories: PropTypes.string.isRequired,
+  loadPosts: PropTypes.func.isRequired,
+  loadCategories: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

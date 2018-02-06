@@ -1,40 +1,55 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import PostContainer from '../containers/PostContainer';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Snackbar from 'material-ui/Snackbar';
+
 import EditPostContainer from '../containers/EditPostContainer';
-import { postDetailsLoading } from '../actions/index';
+import PostContainer from '../containers/PostContainer';
 
 class Posts extends Component {
   componentWillMount() {
-    if (this.props.postIdUrl && !this.props.length) {
-      const { postIdUrl } = this.props;
-      this.props.getPost(postIdUrl);
+    const { postIdUrl, posts, getPost } = this.props;
+    if (postIdUrl && !posts.length) {
+      getPost(postIdUrl);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.postIdUrl !== nextProps.postIdUrl) {
-      const { postIdUrl } = nextProps;
-      nextProps.getPost(postIdUrl);
+    const { postIdUrl, getPost } = nextProps;
+    if (this.props.postIdUrl !== postIdUrl && postIdUrl) {
+      getPost(postIdUrl);
     }
   }
 
   render() {
-    const { posts, newPostClicked, postIdUrl, postDetailsLoading } = this.props
+    const {
+      posts, newPostClicked, postIdUrl, postDetailsLoading,
+    } = this.props;
+    let postsComponent = null;
+    if (posts.length) {
+      postsComponent = posts.map(post => (
+        <PostContainer
+          key={post.id}
+          post={post}
+        />
+      ));
+    } else if (postIdUrl) {
+      if (postDetailsLoading) {
+        postsComponent = 'Post loading...';
+      } else {
+        postsComponent = (
+          <Snackbar
+            open
+            message="Post not found"
+          />
+        );
+      }
+    }
     return (
       <div>
-        {posts.length ?
-          posts.map(post => (
-            <PostContainer
-              key={post.id}
-              post={post}
-            />
-          ))
-          : postIdUrl ? (postDetailsLoading ? (<div>Post loading...</div>) : (<div>Not found</div>)) : null
-        }
+        {postsComponent}
         {!postIdUrl
           && (
           <FloatingActionButton style={{ position: 'fixed', right: 30, bottom: 30 }} onClick={newPostClicked}>
@@ -49,7 +64,11 @@ class Posts extends Component {
 }
 
 Posts.propTypes = {
+  postIdUrl: PropTypes.string.isRequired,
   posts: PropTypes.arrayOf(Object).isRequired,
+  getPost: PropTypes.func.isRequired,
+  newPostClicked: PropTypes.func.isRequired,
+  postDetailsLoading: PropTypes.bool.isRequired,
 };
 
 export default Posts;

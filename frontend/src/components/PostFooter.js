@@ -12,7 +12,7 @@ import { CardActions } from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
 import IconButton from 'material-ui/IconButton';
 
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 
 import { SCORE } from '../utils/PostsComparatorHelper';
 import { DECREMENT_POST_VOTE, INCREMENT_POST_VOTE, SORT_BY_SCORE, suppressOnClick } from '../actions/';
@@ -23,8 +23,8 @@ const PostFooter = ({ post, vote, sortPosts, getArrowIcon, categoryUrl, editPost
     <div style={{ width: '100%', position: 'relative', paddingBottom: '8px' }}>
       <div style={{ paddingLeft: 12 }}>
         <CardActions style={{ display: 'inline-flex', verticalAlign: 'bottom' }}>
-          <RaisedButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '48px' }} onClick={e => vote(DECREMENT_POST_VOTE, e)} />
-          <RaisedButton icon={<AddIcon />} style={{ float: 'left', minWidth: '48px', marginRight: 0 }} onClick={e => vote(INCREMENT_POST_VOTE, e)} />
+          <FlatButton icon={<RemoveIcon />} style={{ float: 'left', minWidth: '48px' }} onClick={e => vote(DECREMENT_POST_VOTE, e)} />
+          <FlatButton icon={<AddIcon />} style={{ float: 'left', minWidth: '48px', marginRight: 0 }} onClick={e => vote(INCREMENT_POST_VOTE, e)} />
         </CardActions>
         <Badge
           badgeContent={post.voteScore}

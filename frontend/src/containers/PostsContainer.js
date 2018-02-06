@@ -12,10 +12,16 @@ function mapStateToProps(state, ownProps) {
   const postIdUrl = getPostId(ownProps.match);
   let posts;
   if (!postIdUrl) {
-    posts = selectedCategories.length ?
-      state.posts.posts.filter(post => selectedCategories.includes(post.category))
+    posts = selectedCategories.length
+      ? state.posts.posts.filter(post => selectedCategories.includes(post.category))
       : state.posts.posts;
-    posts.sort(getComparator(state.posts.postsComparator, state.posts.postsComparator === TIME ? state.posts.timeAscending : state.posts.scoreAscending, posts));
+    posts.sort(getComparator(
+      state.posts.postsComparator,
+      state.posts.postsComparator === TIME
+        ? state.posts.timeAscending
+        : state.posts.scoreAscending,
+      posts,
+    ));
   } else {
     posts = state.posts.posts.filter(post => post.id === postIdUrl);
   }
