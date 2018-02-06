@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes, { object } from 'prop-types';
 import { connect } from 'react-redux';
+
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import CommentIcon from 'material-ui/svg-icons/communication/comment';
 
-import Comment from './Comment';
-import EditComment from './EditComment';
+import Comment from '../components/Comment';
+import EditComment from '../components/EditComment';
 import { suppressOnClick, updateComment, createComment } from '../actions/';
 
 
@@ -52,11 +54,12 @@ class Comments extends Component {
     this.setState({
       editCommentShowing: false,
     });
-    this.state.commentToEdit
-    ? this.props.updateComment(this.state.commentToEdit, this.state.commentBody)
-    : this.props.createComment(this.state.commentBody, this.props.parentId)
+    if (this.state.commentToEdit) {
+      this.props.updateComment(this.state.commentToEdit, this.state.commentBody);
+    } else {
+      this.props.createComment(this.state.commentBody, this.props.parentId);
+    }
   }
-
 
   handleChange = event => (
     this.setState({ commentBody: event.target.value })
@@ -70,7 +73,7 @@ class Comments extends Component {
           <Comment key={comment.id} comment={comment} handleClick={this.handleClick} />))}
         <FloatingActionButton
           style={{ position: 'fixed', right: 30, bottom: 30 }}
-          onClick={(e) => this.createCommentClicked(e)}
+          onClick={e => this.createCommentClicked(e)}
         >
           <CommentIcon />
         </FloatingActionButton>
@@ -90,5 +93,12 @@ const mapDispatchToProps = dispatch => ({
   updateComment: (comment, newBody) => dispatch(updateComment(comment, newBody)),
   createComment: (commentBody, parentId) => dispatch(createComment(commentBody, parentId)),
 });
+
+Comments.propTypes = {
+  parentId: PropTypes.string.isRequired,
+  updateComment: PropTypes.func.isRequired,
+  createComment: PropTypes.func.isRequired,
+  comments: PropTypes.arrayOf(object).isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Comments);

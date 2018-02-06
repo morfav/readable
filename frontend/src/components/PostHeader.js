@@ -1,15 +1,18 @@
 import React from 'react';
-import { CardTitle } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import PropTypes from 'prop-types';
 
 import Badge from 'material-ui/Badge';
-import IconButton from 'material-ui/IconButton';
 import CommentIcon from 'material-ui/svg-icons/communication/comment';
+import { CardTitle } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
 
 import { TIME } from '../utils/PostsComparatorHelper';
-import { SORT_BY_TIME } from '../actions/index';
+import { SORT_BY_TIME } from '../actions/';
 
-const PostHeader = ({ post, sortPosts, getArrowIcon, postTime }) => {
+const PostHeader = ({
+  post, sortPosts, getArrowIcon, postTime,
+}) => {
   const icon = getArrowIcon(TIME);
   return (
     <div>
@@ -41,6 +44,15 @@ const PostHeader = ({ post, sortPosts, getArrowIcon, postTime }) => {
       />
     </div>
   );
+};
+
+PostHeader.propTypes = {
+  post: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+  sortPosts: PropTypes.func.isRequired,
+  getArrowIcon: PropTypes.func.isRequired,
+  postTime: PropTypes.string.isRequired,
 };
 
 export default PostHeader;
