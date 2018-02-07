@@ -17,6 +17,7 @@ import Chip from 'material-ui/Chip';
 import { SCORE } from '../utils/PostsComparatorHelper';
 import { DECREMENT_POST_VOTE, INCREMENT_POST_VOTE, SORT_BY_SCORE, suppressOnClick } from '../actions/';
 
+
 const PostFooter = ({
   post, vote, sortPosts, getArrowIcon, categoryUrl, editPost, deletePost,
 }) => {

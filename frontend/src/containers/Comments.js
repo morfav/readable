@@ -54,10 +54,12 @@ class Comments extends Component {
     this.setState({
       editCommentShowing: false,
     });
-    if (this.state.commentToEdit) {
-      this.props.updateComment(this.state.commentToEdit, this.state.commentBody);
+    const { commentToEdit, commentBody } = this.state;
+    const { persistCommentChanges, persistNewComment, parentId } = this.props;
+    if (commentToEdit) {
+      persistCommentChanges(commentToEdit, commentBody);
     } else {
-      this.props.createComment(this.state.commentBody, this.props.parentId);
+      persistNewComment(commentBody, parentId);
     }
   }
 
@@ -70,7 +72,11 @@ class Comments extends Component {
     return (
       <div>
         {comments.map(comment => (
-          <Comment key={comment.id} comment={comment} handleClick={this.handleClick} />))}
+          <Comment
+            key={comment.id}
+            comment={comment}
+            handleClick={this.handleClick}
+          />))}
         <FloatingActionButton
           style={{ position: 'fixed', right: 30, bottom: 30 }}
           onClick={e => this.createCommentClicked(e)}
@@ -90,14 +96,14 @@ class Comments extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  updateComment: (comment, newBody) => dispatch(updateComment(comment, newBody)),
-  createComment: (commentBody, parentId) => dispatch(createComment(commentBody, parentId)),
+  persistCommentChanges: (comment, newBody) => dispatch(updateComment(comment, newBody)),
+  persistNewComment: (commentBody, parentId) => dispatch(createComment(commentBody, parentId)),
 });
 
 Comments.propTypes = {
   parentId: PropTypes.string.isRequired,
-  updateComment: PropTypes.func.isRequired,
-  createComment: PropTypes.func.isRequired,
+  persistCommentChanges: PropTypes.func.isRequired,
+  persistNewComment: PropTypes.func.isRequired,
   comments: PropTypes.arrayOf(object).isRequired,
 };
 

@@ -121,8 +121,3 @@ export function fetchPostsForCategoryApi(postCategory) {
   })
     .then(res => res.json());
 }
-
-/**
- | `GET /:category/posts` | Get all of the posts for a particular category. |  |
- | `GET /comments/:id` | Get the details for a single comment. | |
- */

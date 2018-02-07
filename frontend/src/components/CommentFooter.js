@@ -15,6 +15,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 import { vote, DECREMENT_COMMENT_VOTE, INCREMENT_COMMENT_VOTE, deleteComment } from '../actions/';
 
+
 const CommentFooter = ({
   comment, voteClicked, handleClick, deleteCommentClicked,
 }) => (
@@ -22,17 +23,19 @@ const CommentFooter = ({
     width: '100%', position: 'relative', paddingBottom: '8px',
     }}
   >
-    <div style={{ paddingLeft: 12 }}>
+    <div style={{ paddingLeft: '12px' }}>
       <CardActions style={{ display: 'inline-flex', verticalAlign: 'bottom' }}>
         <FlatButton
           icon={<RemoveIcon />}
-          style={{ float: 'left', minWidth: '36px', height: '30px' }}
+          style={{
+            float: 'left', minWidth: '36px', height: '30px', lineHeight: '30px',
+          }}
           onClick={e => voteClicked(DECREMENT_COMMENT_VOTE, comment, e)}
         />
         <FlatButton
           icon={<AddIcon />}
           style={{
-            float: 'left', minWidth: '36px', height: '30px', marginRight: 0,
+            float: 'left', minWidth: '36px', height: '30px', lineHeight: '30px', marginRight: 0,
           }}
           onClick={e => voteClicked(INCREMENT_COMMENT_VOTE, comment, e)}
         />
@@ -42,19 +45,30 @@ const CommentFooter = ({
         secondary
         badgeStyle={{ top: 12, right: 12 }}
         style={{
-          paddingLeft: 0, paddingBottom: 0, verticalAlign: 'middle', height: '44px',
+          paddingLeft: 0, paddingBottom: '3px', verticalAlign: 'middle', height: '44px',
         }}
       >
-        <IconButton tooltip="Votes" iconStyle={{ display: 'inline-flex' }}>
+        <IconButton
+          tooltip="Votes"
+          iconStyle={{ display: 'inline-flex' }}
+        >
           <div>
             <PlusOneIcon />
           </div>
         </IconButton>
       </Badge>
-      <IconButton tooltip="Edit Comment" style={{ verticalAlign: 'bottom' }} onClick={e => handleClick(comment, e)}>
+      <IconButton
+        tooltip="Edit Comment"
+        style={{ verticalAlign: 'bottom' }}
+        onClick={e => handleClick(comment, e)}
+      >
         <ModeEditIcon />
       </IconButton>
-      <IconButton tooltip="Delete comment" style={{ verticalAlign: 'bottom' }} onClick={e => deleteCommentClicked(comment, e)}>
+      <IconButton
+        tooltip="Delete comment"
+        style={{ verticalAlign: 'bottom' }}
+        onClick={e => deleteCommentClicked(comment, e)}
+      >
         <Delete />
       </IconButton>
     </div>

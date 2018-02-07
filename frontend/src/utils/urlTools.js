@@ -27,10 +27,10 @@ export const categoriesToUrl = urlString => (category) => {
   return arrayCategoriesToUrl(currentCategories, category);
 };
 
-export const getUrlCategories = (match) => {
-  return match.params.category ? match.params.category : '';
-};
+export const getUrlCategories = match => (
+  match.params.category ? match.params.category : ''
+);
 
-export const getPostId = (match) => {
-  return match.params.post_id ? match.params.post_id : '';
-};
+export const getPostId = match => (
+  match.params.post_id ? match.params.post_id : ''
+);

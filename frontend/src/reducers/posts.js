@@ -13,12 +13,13 @@ const initialPostsState = {
 
 export default function posts(state = initialPostsState, action) {
   switch (action.type) {
-    case ADD_POSTS:
-    const newPostIds = action.posts.map(post => post.id);
+    case ADD_POSTS: {
+      const newPostIds = action.posts.map(post => post.id);
       return {
         ...state,
         posts: [...state.posts.filter(post => !newPostIds.includes(post.id)), ...action.posts],
       };
+    }
     case INCREMENT_POST_VOTE:
       return {
         ...state,
@@ -40,13 +41,17 @@ export default function posts(state = initialPostsState, action) {
     case SORT_BY_TIME:
       return {
         ...state,
-        timeAscending: state.postsComparator === TIME ? !state.timeAscending : state.timeAscending,
+        timeAscending: state.postsComparator === TIME
+          ? !state.timeAscending
+          : state.timeAscending,
         postsComparator: TIME,
       };
     case SORT_BY_SCORE:
       return {
         ...state,
-        scoreAscending: state.postsComparator === SCORE ? !state.scoreAscending : state.scoreAscending,
+        scoreAscending: state.postsComparator === SCORE
+          ? !state.scoreAscending
+          : state.scoreAscending,
         postsComparator: SCORE,
       };
     case EDIT_NEW_POST:
