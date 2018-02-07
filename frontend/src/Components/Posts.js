@@ -48,7 +48,7 @@ class Posts extends Component {
       }
     }
     return (
-      <div>
+      <div style={{ paddingBottom: '20px' }}>
         {postsComponent}
         {!postIdUrl
           && (

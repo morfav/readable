@@ -47,8 +47,8 @@ class Post extends Component {
 
   deletePost = (postId, postCategory, onClickEvent) => {
     suppressOnClick(onClickEvent);
-    const { deletePost, history } = this.props;
-    if (postId) {
+    const { deletePost, history, postIdUrl } = this.props;
+    if (postIdUrl) {
       history.push(`/${postCategory}`);
     }
     deletePost(postId, postCategory);
@@ -85,6 +85,7 @@ class Post extends Component {
             categoryUrl={categoryUrl}
             editPost={editPost}
             deletePost={this.deletePost}
+            postIdUrl={postIdUrl}
           />
         </Card>
         {postIdUrl ? (

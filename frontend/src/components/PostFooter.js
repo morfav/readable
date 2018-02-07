@@ -19,7 +19,7 @@ import { DECREMENT_POST_VOTE, INCREMENT_POST_VOTE, SORT_BY_SCORE, suppressOnClic
 
 
 const PostFooter = ({
-  post, vote, sortPosts, getArrowIcon, categoryUrl, editPost, deletePost,
+  post, vote, sortPosts, getArrowIcon, categoryUrl, editPost, deletePost, postIdUrl,
 }) => {
   const icon = getArrowIcon(SCORE);
   return (
@@ -47,7 +47,7 @@ const PostFooter = ({
           onClick={e => sortPosts(SORT_BY_SCORE, e)}
         >
           <IconButton
-            tooltip="Votes"
+            tooltip={postIdUrl ? 'Votes' : 'sort by votes'}
             iconStyle={{ display: 'inline-flex' }}
           >
             <div>
@@ -100,6 +100,7 @@ PostFooter.propTypes = {
   getArrowIcon: PropTypes.func.isRequired,
   categoryUrl: PropTypes.string.isRequired,
   editPost: PropTypes.func.isRequired,
+  postIdUrl: PropTypes.string.isRequired,
 };
 
 export default PostFooter;
